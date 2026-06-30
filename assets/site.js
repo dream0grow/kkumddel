@@ -1,0 +1,82 @@
+/* =========================================================
+   공통 헤더/푸터 주입 + 네비게이션 동작
+   각 페이지의 <div id="site-header"></div>, <div id="site-footer"></div>
+   위치에 자동으로 삽입됩니다. (빌드 도구 불필요)
+   ========================================================= */
+
+(function () {
+  // 현재 파일명 (예: index.html, news.html)
+  var path = location.pathname.split("/").pop() || "index.html";
+
+  var NAV = [
+    { href: "index.html", label: "홈" },
+    { href: "about.html", label: "단체소개" },
+    { href: "projects.html", label: "사업·프로젝트" },
+    { href: "news.html", label: "소식·보도자료" },
+    { href: "sponsor.html", label: "후원안내" },
+    { href: "contact.html", label: "문의" }
+  ];
+
+  function navLinks() {
+    return NAV.map(function (n) {
+      var active = n.href === path ? ' class="active"' : "";
+      return '<li><a href="' + n.href + '"' + active + ">" + n.label + "</a></li>";
+    }).join("");
+  }
+
+  var headerHTML =
+    '<header class="site-header"><div class="container nav">' +
+      '<a class="brand" href="index.html">' +
+        '<span class="logo">꿈</span>' +
+        '<span>교육성장네트워크 꿈들<small>아이의 꿈이 자라는 교육 공동체</small></span>' +
+      "</a>" +
+      '<button class="nav-toggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>' +
+      '<ul class="nav-links">' + navLinks() +
+        '<li><a class="btn btn--primary" href="sponsor.html">후원하기</a></li>' +
+      "</ul>" +
+    "</div></header>";
+
+  var footerHTML =
+    '<footer class="site-footer"><div class="container">' +
+      '<div class="foot-grid">' +
+        "<div>" +
+          "<h4>교육성장네트워크 꿈들</h4>" +
+          '<p class="muted">아동·청소년 교육 성장과 지역 문화를 잇는<br>비영리 민간단체입니다.<br>하늘오름어린이풍물단을 운영합니다.</p>' +
+        "</div>" +
+        "<div>" +
+          "<h4>바로가기</h4>" +
+          '<p class="muted">' +
+            '<a href="about.html">단체소개</a><br>' +
+            '<a href="projects.html">사업·프로젝트</a><br>' +
+            '<a href="news.html">소식·보도자료</a><br>' +
+            '<a href="sponsor.html">후원안내</a>' +
+          "</p>" +
+        "</div>" +
+        "<div>" +
+          "<h4>문의</h4>" +
+          '<p class="muted">이메일 : <a href="mailto:ggumdle@example.com">ggumdle@example.com</a><br>' +
+          "전화 : 000-0000-0000<br>" +
+          "후원·자원봉사 문의 환영합니다.</p>" +
+        "</div>" +
+      "</div>" +
+      '<div class="copy">© ' + "2026 교육성장네트워크 꿈들 (꿈들). All rights reserved." +
+      " &nbsp;·&nbsp; 본 사이트는 비영리 단체 소개용입니다.</div>" +
+    "</div></footer>";
+
+  function inject(id, html) {
+    var el = document.getElementById(id);
+    if (el) el.outerHTML = html;
+  }
+
+  inject("site-header", headerHTML);
+  inject("site-footer", footerHTML);
+
+  // 모바일 메뉴 토글
+  var toggle = document.querySelector(".nav-toggle");
+  var links = document.querySelector(".nav-links");
+  if (toggle && links) {
+    toggle.addEventListener("click", function () {
+      links.classList.toggle("open");
+    });
+  }
+})();
