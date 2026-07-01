@@ -12,8 +12,8 @@
         update profiles set role='admin' where email='관리자이메일';
    ========================================================= */
 window.KKUMDLE_CONFIG = {
-  SUPABASE_URL: "",       // 예: "https://abcxyz.supabase.co"
-  SUPABASE_ANON_KEY: "",  // 예: "eyJhbGciOiJI..."
+  SUPABASE_URL: "https://gywbsiatubvvtnblvwdz.supabase.co/rest/v1/",       // 예: "https://abcxyz.supabase.co"
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5d2JzaWF0dWJ2dnRuYmx2d2R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MDgxMjAsImV4cCI6MjA5ODQ4NDEyMH0.5nInQ2etrZzCIbzF8LEzAGZhXPIshRFsw6aW-t5cpJ0",  // 예: "eyJhbGciOiJI..."
 
   // 강의·프로그램 신청을 Supabase(applications 테이블)에 저장할지 여부
   APPLY_TO_SUPABASE: true
