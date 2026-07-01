@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>소식·보도자료 — 교육성장네트워크 꿈들</title>
+  <meta name="description" content="교육성장네트워크 꿈들의 소식, 보도자료, 공지사항을 확인하세요." />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <div class="page-head">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">홈</a> · 소식·보도자료</div>
+      <h1>소식·보도자료</h1>
+      <p>꿈들의 활동 소식과 공지, 보도자료를 한곳에서 확인하세요.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="filterbar" id="filterbar">
+        <button class="chip active" data-cat="전체">전체</button>
+        <button class="chip" data-cat="소식">소식</button>
+        <button class="chip" data-cat="보도자료">보도자료</button>
+        <button class="chip" data-cat="프로젝트">프로젝트</button>
+        <button class="chip" data-cat="공지사항">공지사항</button>
+      </div>
+      <ul class="posts" id="all-posts"></ul>
+
+      <p class="note" style="margin-top:24px">💡 목록의 글을 누르면 <strong>본문</strong>이 열립니다.
+        모든 글과 본문·이미지는 기존 꿈들.com에서 이관했습니다.</p>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/posts.js"></script>
+  <script>
+    function show(cat) { renderPosts("all-posts", { category: cat }); }
+    show("전체");
+    document.getElementById("filterbar").addEventListener("click", function (e) {
+      var btn = e.target.closest(".chip");
+      if (!btn) return;
+      document.querySelectorAll("#filterbar .chip").forEach(function (c) { c.classList.remove("active"); });
+      btn.classList.add("active");
+      show(btn.dataset.cat);
+    });
+  </script>
+  <script src="assets/site.js"></script>
+</body>
+</html>
