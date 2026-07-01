@@ -70,9 +70,24 @@ alter table public.applications   enable row level security;
 
 -- profiles 정책
 create policy "본인 프로필 조회" on public.profiles for select using (auth.uid() = id or public.is_admin());
-create policy "본인 프로필 생성" on public.profiles for insert with check (auth.uid() = id);
+-- 가입 시 role은 반드시 'member' (스스로 admin 지정 차단)
+create policy "본인 프로필 생성" on public.profiles for insert with check (auth.uid() = id and role = 'member');
 create policy "본인 프로필 수정" on public.profiles for update using (auth.uid() = id);
 create policy "관리자 프로필 수정" on public.profiles for update using (public.is_admin());
+
+-- 본인 프로필 수정 시 role(권한) 변경 차단 — 관리자 또는 서버(SQL editor)만 role 변경 가능
+create or replace function public.protect_role() returns trigger
+language plpgsql security definer as $$
+begin
+  if (auth.uid() is not null) and (not public.is_admin())
+     and (new.role is distinct from old.role) then
+    new.role := old.role;  -- 일반 회원의 role 변경 시도를 무시
+  end if;
+  return new;
+end $$;
+drop trigger if exists trg_protect_role on public.profiles;
+create trigger trg_protect_role before update on public.profiles
+  for each row execute function public.protect_role();
 
 -- project_posts 정책: 누구나 읽기, 회원만 작성(본인), 본인/관리자 삭제·수정
 create policy "게시글 공개 조회" on public.project_posts for select using (true);
@@ -83,6 +98,33 @@ create policy "본인/관리자 게시글 삭제" on public.project_posts for de
 -- applications 정책: 누구나(비회원 포함) 신청 등록, 관리자만 조회
 create policy "누구나 신청 등록" on public.applications for insert with check (true);
 create policy "관리자만 신청 조회" on public.applications for select using (public.is_admin());
+```
+
+## 🔒 이미 예전 SQL을 실행하셨다면 — 보안 패치(권한 상승 차단)
+초기 정책에는 일반 회원이 스스로 `role='admin'`으로 올릴 수 있는 허점이 있었습니다.
+아래를 **SQL Editor에 한 번 실행**하면 막힙니다. (신규 설치는 위 SQL에 이미 포함)
+```sql
+-- 1) 가입 시 role을 'member'로 고정
+drop policy if exists "본인 프로필 생성" on public.profiles;
+create policy "본인 프로필 생성" on public.profiles
+  for insert with check (auth.uid() = id and role = 'member');
+
+-- 2) 본인 프로필 수정 시 role 변경 차단(관리자/서버만 허용)
+create or replace function public.protect_role() returns trigger
+language plpgsql security definer as $$
+begin
+  if (auth.uid() is not null) and (not public.is_admin())
+     and (new.role is distinct from old.role) then
+    new.role := old.role;
+  end if;
+  return new;
+end $$;
+drop trigger if exists trg_protect_role on public.profiles;
+create trigger trg_protect_role before update on public.profiles
+  for each row execute function public.protect_role();
+
+-- 3) 혹시 잘못 올라간 관리자 계정이 있는지 점검(관리자로 둘 계정만 남기세요)
+--    select id, email, role from public.profiles where role = 'admin';
 ```
 
 ## 4. 이메일 인증(선택)
