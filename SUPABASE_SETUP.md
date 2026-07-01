@@ -111,10 +111,23 @@ create policy "회원 게시글 작성" on public.project_posts for insert with 
 create policy "본인/관리자 게시글 수정" on public.project_posts for update using (auth.uid() = author_id or public.is_admin());
 create policy "본인/관리자 게시글 삭제" on public.project_posts for delete using (auth.uid() = author_id or public.is_admin());
 
--- applications 정책: 누구나(비회원 포함) 신청 등록, 관리자만 조회
+-- applications 정책: 누구나(비회원 포함) 신청 등록, 로그인 회원만 조회(비로그인 차단)
 create policy "누구나 신청 등록" on public.applications for insert with check (true);
-create policy "관리자만 신청 조회" on public.applications for select using (public.is_admin());
+create policy "회원 신청 조회" on public.applications for select using (auth.uid() is not null);
 ```
+
+### 🔁 이미 설치하셨다면 — 신청 열람을 '회원'까지 허용하는 패치
+초기에는 관리자만 신청을 볼 수 있었습니다. 로그인 회원도 신청 현황을 볼 수 있게 하려면
+아래를 **SQL Editor에서 1회 실행**하세요. (비로그인 사용자는 여전히 볼 수 없습니다.)
+```sql
+drop policy if exists "관리자만 신청 조회" on public.applications;
+drop policy if exists "회원 신청 조회" on public.applications;
+create policy "회원 신청 조회" on public.applications
+  for select using (auth.uid() is not null);
+```
+> 참고: 이 정책은 로그인한 회원이 신청 목록(이름·프로그램·날짜·연락처)을 읽을 수 있게 합니다.
+> 홈페이지 화면에서는 **연락처(개인정보)는 관리자에게만** 보이도록 처리했지만,
+> DB 차원에서 연락처까지 회원에게 감추려면 별도의 '뷰(view)'가 필요합니다(원하시면 만들어 드려요).
 
 ## 🔒 이미 예전 SQL을 실행하셨다면 — 보안 패치(권한 상승 차단)
 초기 정책에는 일반 회원이 스스로 `role='admin'`으로 올릴 수 있는 허점이 있었습니다.
