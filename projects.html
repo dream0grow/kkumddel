@@ -4,7 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>사업·프로젝트 — 교육성장네트워크 꿈들</title>
-  <meta name="description" content="하늘오름어린이풍물단, 교육성장 네트워크 등 꿈들의 사업과 프로젝트를 소개합니다." />
+  <meta name="description" content="하날오름어린이풍물단, 교육성장 네트워크 등 꿈들의 사업과 프로젝트를 소개합니다." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="교육성장네트워크 꿈들" />
+  <meta property="og:title" content="사업·프로젝트 — 교육성장네트워크 꿈들" />
+  <meta property="og:description" content="하날오름어린이풍물단, 교육성장 네트워크 등 꿈들의 사업과 프로젝트를 소개합니다." />
+  <meta property="og:image" content="https://dream0grow.github.io/kkumddel/assets/img/brand/logo-full.png" />
+  <meta property="og:url" content="https://dream0grow.github.io/kkumddel/projects.html" />
+  <meta name="twitter:card" content="summary" />
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
@@ -23,7 +31,7 @@
       <div class="grid grid--2">
         <div class="card">
           <div class="ico">🥁</div>
-          <h3>하늘오름어린이풍물단</h3>
+          <h3>하날오름어린이풍물단</h3>
           <p>아이들이 우리 전통 가락을 배우며 자신감, 협동심, 문화적 자긍심을 키워가는
              어린이 풍물단입니다. 매년 신규 단원을 모집합니다.</p>
           <p style="margin-top:12px"><a href="news.html">▸ 단원 모집 소식 보기</a></p>
@@ -50,22 +58,85 @@
         </div>
       </div>
 
+      <div class="grid grid--3 photo-band" style="margin-top:26px">
+        <figure><img src="assets/img/site/workshop.jpg" alt="꿈꾸는 교실·감수성 훈련" loading="lazy" />
+          <figcaption>함께 배우는 꿈꾸는 교실</figcaption></figure>
+        <figure><img src="assets/img/site/talk.jpg" alt="방송에 출연한 꿈들 선생님들" loading="lazy" />
+          <figcaption>교육 이야기를 나누는 선생님들</figcaption></figure>
+        <figure><img src="assets/img/site/community.jpg" alt="지역과 함께하는 봉사활동" loading="lazy" />
+          <figcaption>지역과 함께하는 공부방</figcaption></figure>
+      </div>
     </div>
   </section>
 
+  <!-- 프로젝트 게시판 -->
   <section class="section section--soft">
     <div class="container">
-      <span class="eyebrow">PROJECTS</span>
-      <h2>프로젝트 소식</h2>
-      <p class="lead">하늘오름어린이풍물단 단원 모집, 감수성훈련, 꿈꾸는 교실 등 기존 사이트에서 이관한 프로젝트 글입니다.</p>
-      <ul class="posts" id="project-posts" style="margin-top:8px"></ul>
-      <p class="note" style="margin-top:20px">💡 글을 누르면 본문이 열립니다.</p>
+      <div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:10px">
+        <div>
+          <span class="eyebrow">PROJECT BOARD</span>
+          <h2>프로젝트 게시판</h2>
+          <p class="lead" style="margin-bottom:0">하날오름어린이풍물단 단원 모집, 감수성 훈련, 꿈꾸는 교실 등 프로젝트 소식과 참여 안내입니다.</p>
+        </div>
+        <button class="btn btn--primary" id="write-btn" type="button">✏️ 글쓰기</button>
+      </div>
+      <ul class="posts" id="project-posts" style="margin-top:18px"></ul>
+      <p class="note" style="margin-top:16px" id="write-hint">💡 글을 누르면 본문이 열립니다.
+        <strong>글쓰기는 회원 로그인 후</strong> 이용할 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 강의·프로그램 신청 -->
+  <section class="section" id="apply">
+    <div class="container">
+      <span class="eyebrow">APPLY</span>
+      <h2>강의·프로그램 신청</h2>
+      <p class="lead">감수성 훈련, 꿈꾸는 교실, 하날오름어린이풍물단 등 참여를 신청하실 수 있습니다.</p>
+      <form class="apply-form card" id="apply-form" style="max-width:640px">
+        <div class="fld">
+          <label for="af-program">신청 프로그램 <span class="req">*</span></label>
+          <select id="af-program" required>
+            <option value="">선택해 주세요</option>
+            <option>하날오름어린이풍물단</option>
+            <option>감수성 훈련</option>
+            <option>꿈꾸는 교실</option>
+            <option>기타(문의)</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="af-name">이름 <span class="req">*</span></label>
+          <input id="af-name" type="text" required placeholder="신청자 이름" />
+        </div>
+        <div class="fld">
+          <label for="af-phone">연락처 <span class="req">*</span></label>
+          <input id="af-phone" type="tel" required placeholder="010-0000-0000" />
+        </div>
+        <div class="fld">
+          <label for="af-msg">신청 내용 · 문의</label>
+          <textarea id="af-msg" rows="4" placeholder="학교·학년, 참여 인원, 문의 사항 등을 적어주세요."></textarea>
+        </div>
+        <button class="btn btn--primary btn--lg" type="submit">신청서 보내기</button>
+        <p class="note" id="apply-note" style="margin-top:12px">
+          제출 시 신청 내용이 담당자에게 전달됩니다. 문의: <a href="tel:010-2344-4373">010-2344-4373</a>
+        </p>
+      </form>
     </div>
   </section>
 
   <div id="site-footer"></div>
   <script src="assets/posts.js"></script>
-  <script>renderPosts("project-posts", { category: "프로젝트" });</script>
+  <script src="assets/apply.js"></script>
+  <script>
+    renderPosts("project-posts", { category: "프로젝트" });
+    // 글쓰기: 회원 시스템 연동 전 안내
+    document.getElementById("write-btn").addEventListener("click", function () {
+      if (window.KKUMDLE_MEMBER && window.KKUMDLE_MEMBER.canWrite && window.KKUMDLE_MEMBER.canWrite()) {
+        location.href = "write.html";
+      } else {
+        alert("글쓰기는 회원 로그인 후 이용할 수 있습니다.\n회원 기능은 준비 중입니다.");
+      }
+    });
+  </script>
   <script src="assets/site.js"></script>
 </body>
 </html>
