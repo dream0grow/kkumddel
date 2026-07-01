@@ -27,7 +27,7 @@
   var headerHTML =
     '<header class="site-header"><div class="container nav">' +
       '<a class="brand" href="index.html">' +
-        '<span class="logo">꿈</span>' +
+        '<img class="logo-img" src="assets/img/brand/logo-symbol.png" alt="교육성장네트워크 꿈들 로고" />' +
         '<span>교육성장네트워크 꿈들<small>아이의 꿈이 자라는 교육 공동체</small></span>' +
       "</a>" +
       '<button class="nav-toggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>' +
@@ -47,16 +47,18 @@
           "<h4>바로가기</h4>" +
           '<p class="muted">' +
             '<a href="about.html">단체소개</a><br>' +
+            '<a href="bylaws.html">정관·기부금 공개</a><br>' +
             '<a href="projects.html">사업·프로젝트</a><br>' +
             '<a href="news.html">소식·보도자료</a><br>' +
             '<a href="sponsor.html">후원안내</a>' +
           "</p>" +
         "</div>" +
         "<div>" +
-          "<h4>문의</h4>" +
-          '<p class="muted">이메일 : <a href="mailto:ggumdle@example.com">ggumdle@example.com</a><br>' +
-          "전화 : 000-0000-0000<br>" +
-          "후원·자원봉사 문의 환영합니다.</p>" +
+          "<h4>문의 · 후원</h4>" +
+          '<p class="muted">전화 : <a href="tel:010-2344-4373">010-2344-4373</a><br>' +
+          "주소 : 제주특별자치도 제주시 동문로21길 10<br>" +
+          "후원계좌 : 농협 301-0207-2141-41<br>" +
+          "<span style=\"font-size:.86rem\">(예금주 : 교육성장네트워크 꿈들)</span></p>" +
         "</div>" +
       "</div>" +
       '<div class="copy">© ' + "2026 교육성장네트워크 꿈들 (꿈들). All rights reserved." +
