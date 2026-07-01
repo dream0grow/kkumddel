@@ -10,17 +10,51 @@
 
   var NAV = [
     { href: "index.html", label: "홈" },
-    { href: "about.html", label: "단체소개" },
-    { href: "projects.html", label: "사업·프로젝트" },
-    { href: "news.html", label: "소식·보도자료" },
-    { href: "sponsor.html", label: "후원안내" },
-    { href: "contact.html", label: "문의" }
+    { label: "단체소개", children: [
+      { href: "about.html", label: "인사말·미션" },
+      { href: "about.html#history", label: "연혁" },
+      { href: "about.html#org", label: "조직·구성" },
+      { href: "bylaws.html", label: "정관·투명운영" },
+      { href: "contact.html", label: "오시는 길·문의" }
+    ]},
+    { label: "사업안내", children: [
+      { href: "programs.html", label: "사업 한눈에 보기" },
+      { href: "programs.html#gongbubang", label: "푸른꿈 작은 공부방" },
+      { href: "programs.html#ggumgyosil", label: "꿈꾸는 교실" },
+      { href: "programs.html#gamsu", label: "감수성 훈련" },
+      { href: "programs.html#pungmul", label: "하날오름어린이풍물단" }
+    ]},
+    { label: "소식", children: [
+      { href: "news.html", label: "소식·보도자료" },
+      { href: "gallery.html", label: "활동 갤러리" }
+    ]},
+    { href: "board.html", label: "프로젝트 게시판" },
+    { label: "참여하기", children: [
+      { href: "sponsor.html", label: "후원안내" },
+      { href: "apply.html", label: "강의·프로그램 신청" },
+      { href: "contact.html", label: "자원봉사·문의" }
+    ]}
   ];
+
+  // 현재 페이지가 이 메뉴(또는 하위)에 속하는지
+  function isActive(n) {
+    if (n.href && n.href.split("#")[0] === path) return true;
+    if (n.children) return n.children.some(function (c) { return c.href.split("#")[0] === path; });
+    return false;
+  }
 
   function navLinks() {
     return NAV.map(function (n) {
-      var active = n.href === path ? ' class="active"' : "";
-      return '<li><a href="' + n.href + '"' + active + ">" + n.label + "</a></li>";
+      var active = isActive(n) ? " active" : "";
+      if (n.children) {
+        var sub = n.children.map(function (c) {
+          return '<li><a href="' + c.href + '">' + c.label + "</a></li>";
+        }).join("");
+        return '<li class="has-sub' + active + '">' +
+          '<a href="' + (n.children[0].href) + '" class="sub-toggle">' + n.label + ' <i class="caret">▾</i></a>' +
+          '<ul class="sub-menu">' + sub + "</ul></li>";
+      }
+      return '<li><a href="' + n.href + '"' + (active ? ' class="active"' : "") + ">" + n.label + "</a></li>";
     }).join("");
   }
 
@@ -47,10 +81,11 @@
           "<h4>바로가기</h4>" +
           '<p class="muted">' +
             '<a href="about.html">단체소개</a><br>' +
-            '<a href="bylaws.html">정관·기부금 공개</a><br>' +
-            '<a href="projects.html">사업·프로젝트</a><br>' +
-            '<a href="news.html">소식·보도자료</a><br>' +
-            '<a href="sponsor.html">후원안내</a>' +
+            '<a href="programs.html">사업안내</a><br>' +
+            '<a href="news.html">소식</a><br>' +
+            '<a href="board.html">프로젝트 게시판</a><br>' +
+            '<a href="apply.html">강의·프로그램 신청</a><br>' +
+            '<a href="bylaws.html">정관·기부금 공개</a>' +
           "</p>" +
         "</div>" +
         "<div>" +
@@ -81,4 +116,14 @@
       links.classList.toggle("open");
     });
   }
+
+  // 모바일: 상위 메뉴 탭 시 하위 메뉴 펼치기(아코디언)
+  document.querySelectorAll(".has-sub > .sub-toggle").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      if (window.matchMedia("(max-width: 860px)").matches) {
+        e.preventDefault();
+        a.parentNode.classList.toggle("open");
+      }
+    });
+  });
 })();

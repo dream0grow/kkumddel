@@ -33,11 +33,18 @@
   // ---------- 인증 ----------
   async function signUp(email, password, name, phone) {
     if (!client) throw new Error("not-ready");
-    var r = await client.auth.signUp({ email: email, password: password });
+    // 이름/연락처를 auth 메타데이터로 전달 → DB 트리거(handle_new_user)가 프로필 자동 생성
+    var r = await client.auth.signUp({
+      email: email, password: password,
+      options: { data: { name: name || email, phone: phone || "" } }
+    });
     if (r.error) throw r.error;
     var uid = r.data.user && r.data.user.id;
-    if (uid) {
-      await client.from("profiles").upsert({ id: uid, email: email, name: name || email, phone: phone || "", role: "member" });
+    // 로그인 세션이 있으면(이메일 인증 꺼진 경우) 프로필 보강 시도(트리거가 이미 만들었으면 갱신)
+    if (uid && r.data.session) {
+      try {
+        await client.from("profiles").upsert({ id: uid, email: email, name: name || email, phone: phone || "", role: "member" });
+      } catch (e) {}
     }
     return r.data;
   }

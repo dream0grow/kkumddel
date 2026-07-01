@@ -63,6 +63,22 @@ language sql security definer stable as $$
   select exists(select 1 from public.profiles where id = auth.uid() and role = 'admin');
 $$;
 
+-- 회원가입 시 프로필 자동 생성 (이메일 인증 켜져 있어도 안전하게 생성됨)
+create or replace function public.handle_new_user() returns trigger
+language plpgsql security definer as $$
+begin
+  insert into public.profiles (id, email, name, phone, role)
+  values (new.id, new.email,
+          coalesce(new.raw_user_meta_data->>'name', new.email),
+          coalesce(new.raw_user_meta_data->>'phone', ''),
+          'member')
+  on conflict (id) do nothing;
+  return new;
+end $$;
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created after insert on auth.users
+  for each row execute function public.handle_new_user();
+
 -- RLS 활성화
 alter table public.profiles      enable row level security;
 alter table public.project_posts  enable row level security;
@@ -140,6 +156,15 @@ update public.profiles set role = 'admin' where email = '관리자이메일@exam
 ```
 이제 그 계정으로 로그인하면 상단 메뉴에 **관리** 링크가 보이고,
 `admin.html` 에서 회원·신청·게시글을 관리할 수 있습니다.
+
+> **프로필 줄이 없어서 위 update가 0건이면**(이메일 인증 켠 상태로 먼저 가입한 경우),
+> 아래처럼 프로필을 만들면서 관리자로 지정하세요:
+> ```sql
+> insert into public.profiles (id, email, name, role)
+> select id, email, coalesce(raw_user_meta_data->>'name', email), 'admin'
+> from auth.users where email = '관리자이메일@example.com'
+> on conflict (id) do update set role = 'admin';
+> ```
 
 ---
 

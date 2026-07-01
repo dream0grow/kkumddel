@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>프로젝트 게시판 — 교육성장네트워크 꿈들</title>
+  <meta name="description" content="회원이 참여하는 프로젝트 게시판. 단원 모집, 참가 후기, 프로젝트 소식을 나눕니다." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="교육성장네트워크 꿈들" />
+  <meta property="og:title" content="프로젝트 게시판 — 교육성장네트워크 꿈들" />
+  <meta property="og:description" content="회원이 참여하는 프로젝트 게시판입니다." />
+  <meta property="og:image" content="https://dream0grow.github.io/kkumddel/assets/img/brand/logo-full.png" />
+  <meta property="og:url" content="https://dream0grow.github.io/kkumddel/board.html" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <div class="page-head">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">홈</a> · 프로젝트 게시판</div>
+      <h1>프로젝트 게시판</h1>
+      <p>단원 모집·참가 후기 등 프로젝트 소식을 회원과 함께 나눕니다.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <h2 style="margin:0">회원 게시판</h2>
+        <button class="btn btn--primary" id="write-btn" type="button">✏️ 글쓰기</button>
+      </div>
+      <ul class="posts" id="member-posts" style="margin-top:18px"></ul>
+      <p class="note" id="member-note" style="margin-top:10px"></p>
+
+      <h3 style="margin:36px 0 6px">이전 프로젝트 소식</h3>
+      <p class="note" style="margin:0 0 8px">기존 꿈들.com에서 이관한 프로젝트 글입니다. 누르면 본문이 열립니다.</p>
+      <ul class="posts" id="project-posts"></ul>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/posts.js"></script>
+  <script>
+    renderPosts("project-posts", { category: "프로젝트" });
+
+    document.getElementById("write-btn").addEventListener("click", function () {
+      var M = window.KKUMDLE_MEMBER;
+      if (!M || !M.ready) { alert("회원 기능이 아직 연결되지 않았습니다.\n(관리자: assets/config.js 에 Supabase 정보 입력)"); return; }
+      if (M.canWrite()) location.href = "write.html";
+      else { alert("글쓰기는 회원 로그인 후 이용할 수 있습니다."); location.href = "login.html"; }
+    });
+
+    function esc(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+    async function loadMemberPosts() {
+      var note = document.getElementById("member-note");
+      var M = window.KKUMDLE_MEMBER, DB = window.KKUMDLE_DB;
+      if (!M || !M.ready) { note.innerHTML = "💡 회원이 직접 올리는 글 기능은 준비 중입니다."; return; }
+      var posts = [];
+      try { posts = await DB.listProjectPosts(); } catch (e) {}
+      var el = document.getElementById("member-posts");
+      if (!posts.length) { note.innerHTML = "아직 회원이 작성한 글이 없습니다. 첫 글을 남겨보세요!"; return; }
+      note.innerHTML = "회원이 작성한 글입니다.";
+      el.innerHTML = posts.map(function (p) {
+        var d = (p.created_at || "").slice(0,10).replace(/-/g,".");
+        return '<li><a class="post" href="#" data-mid="'+p.id+'">' +
+          '<span class="tag t-프로젝트">회원</span>' +
+          '<span class="title">'+esc(p.title)+'</span>' +
+          '<span class="date">'+esc(p.author_name)+' · '+d+'</span></a>' +
+          '<div class="member-body" id="mb-'+p.id+'" style="display:none;padding:0 6px 18px;white-space:pre-wrap;color:#33384a">'+
+          esc(p.body)+(M.isAdmin()?'<div style="margin-top:12px"><button class="btn btn--ghost" data-del="'+p.id+'">삭제</button></div>':'')+'</div></li>';
+      }).join("");
+      el.addEventListener("click", async function (e) {
+        var a = e.target.closest("a.post[data-mid]");
+        if (a) { e.preventDefault(); var b = document.getElementById("mb-"+a.getAttribute("data-mid")); if (b) b.style.display = b.style.display==="none"?"block":"none"; return; }
+        var del = e.target.closest("button[data-del]");
+        if (del && confirm("이 글을 삭제할까요?")) { try { await DB.deleteProjectPost(del.getAttribute("data-del")); loadMemberPosts(); } catch(err){ alert("삭제 권한이 없습니다."); } }
+      });
+    }
+    window.addEventListener("load", function(){ setTimeout(loadMemberPosts, 300); });
+  </script>
+  <script src="assets/site.js"></script>
+</body>
+</html>
