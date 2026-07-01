@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>활동 갤러리 — 교육성장네트워크 꿈들</title>
+  <meta name="description" content="교육성장네트워크 꿈들의 활동 사진 갤러리. 공부방, 꿈꾸는 교실, 감수성 훈련, 하날오름어린이풍물단의 현장입니다." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="교육성장네트워크 꿈들" />
+  <meta property="og:title" content="활동 갤러리 — 교육성장네트워크 꿈들" />
+  <meta property="og:description" content="꿈들의 활동 현장 사진 갤러리." />
+  <meta property="og:image" content="https://dream0grow.github.io/kkumddel/assets/img/brand/logo-full.png" />
+  <meta property="og:url" content="https://dream0grow.github.io/kkumddel/gallery.html" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <div class="page-head">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">홈</a> · 소식 · 활동 갤러리</div>
+      <h1>활동 갤러리</h1>
+      <p>아이들과 교사, 지역이 함께한 꿈들의 현장입니다. 사진을 누르면 크게 보입니다.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="gallery" id="gallery">
+        <figure class="ph"><img src="assets/img/gallery/g01.jpg" alt="지역과 함께하는 공부방 봉사활동" loading="lazy"><figcaption>지역과 함께하는 공부방</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g02.jpg" alt="꿈꾸는 교실 워크숍" loading="lazy"><figcaption>꿈꾸는 교실 워크숍</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g03.jpg" alt="방송에 출연한 꿈들 선생님들" loading="lazy"><figcaption>방송에 함께한 선생님들</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g04.jpg" alt="교육 이야기를 나누는 선생님들" loading="lazy"><figcaption>교육 이야기를 나누다</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g05.png" alt="꿈들 활동 현장" loading="lazy"><figcaption>활동 현장</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g06.png" alt="꿈들 활동 현장" loading="lazy"><figcaption>활동 현장</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g07.png" alt="꿈들 활동 현장" loading="lazy"><figcaption>활동 현장</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g08.png" alt="꿈들 활동 현장" loading="lazy"><figcaption>활동 현장</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g09.jpg" alt="꿈들 활동 현장" loading="lazy"><figcaption>활동 현장</figcaption></figure>
+        <figure class="ph"><img src="assets/img/gallery/g10.jpg" alt="꿈들 활동 현장" loading="lazy"><figcaption>활동 현장</figcaption></figure>
+      </div>
+      <p class="note" style="margin-top:20px">더 많은 활동 이야기는 <a href="news.html">소식</a>과 <a href="board.html">프로젝트 게시판</a>에서 볼 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 라이트박스 -->
+  <div class="lightbox" id="lightbox">
+    <button class="lb-x" aria-label="닫기">×</button>
+    <img id="lb-img" alt="" />
+    <div class="lb-cap" id="lb-cap"></div>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      var lb = document.getElementById("lightbox"),
+          img = document.getElementById("lb-img"),
+          cap = document.getElementById("lb-cap");
+      document.getElementById("gallery").addEventListener("click", function (e) {
+        var f = e.target.closest("figure.ph"); if (!f) return;
+        img.src = f.querySelector("img").src;
+        cap.textContent = f.querySelector("figcaption").textContent;
+        lb.classList.add("open"); document.body.style.overflow = "hidden";
+      });
+      function close(){ lb.classList.remove("open"); document.body.style.overflow=""; }
+      lb.addEventListener("click", function (e) { if (e.target === lb || e.target.classList.contains("lb-x")) close(); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    })();
+  </script>
+  <script src="assets/site.js"></script>
+</body>
+</html>

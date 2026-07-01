@@ -38,29 +38,37 @@
         지난 사용 내역은 <a href="news.html">소식</a>에서 확인하실 수 있습니다.</p>
 
       <h2>후원 방법</h2>
-      <div class="grid grid--2" style="margin:18px 0">
+      <div class="donate-grid">
         <div class="card">
           <h3>🏦 계좌 후원</h3>
-          <p style="font-size:1.05rem;color:var(--ink)">
-            <strong>농협 301-0207-2141-41</strong><br>
-            예금주 : 교육성장네트워크 꿈들</p>
-          <p style="margin-top:10px">정기·일시 후원 모두 환영합니다. 입금자명으로 후원해 주시면,
-            영수증·안내가 필요하실 때 <a href="tel:010-2344-4373">010-2344-4373</a>으로 연락 주세요.</p>
+          <p class="acct-big" style="margin:8px 0 2px">농협 301-0207-2141-41
+            <button class="copy-btn" type="button" id="copy-acct">복사</button></p>
+          <p style="color:var(--ink-soft)">예금주 : 교육성장네트워크 꿈들</p>
+          <p style="margin-top:12px">일시·정기 후원 모두 환영합니다. <strong>입금자명</strong>을 남겨주시면
+            영수증·감사 인사를 드릴 수 있어요. 문의 <a href="tel:010-2344-4373">010-2344-4373</a>.</p>
         </div>
-        <div class="card">
-          <h3>📝 후원 신청·문의</h3>
-          <p>후원 신청과 자원봉사 문의를 환영합니다. 전화 또는 문의 페이지로 연락 주세요.</p>
-          <p style="margin-top:12px">
-            <a class="btn btn--primary" href="tel:010-2344-4373">전화 010-2344-4373</a>
-            &nbsp;<a class="btn btn--ghost" href="contact.html">문의하기</a>
-          </p>
-          <p class="note" style="margin-top:12px">온라인 후원신청 폼은 준비 중입니다. (추후 연결 예정)</p>
+        <div class="card qr-card">
+          <h3>📱 QR로 후원 안내</h3>
+          <img src="assets/img/brand/donate-qr.png" alt="후원 안내 QR" />
+          <p class="note">휴대폰 카메라로 스캔하면 이 후원 안내 페이지가 열립니다.<br>
+            포스터·SNS·소식지에 넣어 홍보하세요.</p>
         </div>
       </div>
 
-      <h2>기부금 영수증</h2>
-      <p>기부금 영수증 발급 가능 여부와 절차는 단체 정책에 따릅니다.
-        자세한 사항은 <a href="contact.html">문의</a> 바랍니다.</p>
+      <h2>💛 정기후원</h2>
+      <p>매월 일정 금액을 정기적으로 후원해 주시면, 아이들의 배움과 공부방 운영을
+        안정적으로 이어갈 수 있습니다.</p>
+      <ul>
+        <li><strong>정기 계좌이체</strong> — 거래 은행 앱/인터넷뱅킹에서 위 계좌로 <em>매월 자동이체</em>를 등록해 주세요.</li>
+        <li><strong>금액 예시</strong> — 월 1만 원 · 3만 원 · 5만 원 (원하시는 금액으로 자유롭게)</li>
+        <li><strong>신청·변경·해지</strong> — <a href="tel:010-2344-4373">010-2344-4373</a> 또는 <a href="contact.html">문의</a>로 도와드립니다.</li>
+      </ul>
+      <p class="note">💡 카카오페이·토스 등 간편송금 링크가 준비되면 이 자리에 <strong>바로 송금 QR</strong>로 교체해 드립니다.
+        (링크만 알려주시면 반영)</p>
+
+      <h2>기부금 영수증 · 투명 운영</h2>
+      <p>꿈들은 후원금을 소중히 여기며, <a href="bylaws.html">연간 기부금 사용 결과를 공개</a>합니다.
+        기부금 영수증 발급은 <a href="contact.html">문의</a> 바랍니다.</p>
     </div>
   </section>
 
@@ -68,6 +76,15 @@
   <script src="assets/config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="assets/auth.js"></script>
+  <script>
+    var cb = document.getElementById("copy-acct");
+    if (cb) cb.addEventListener("click", function () {
+      var t = "농협 301-0207-2141-41 (예금주 교육성장네트워크 꿈들)";
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject())
+        .then(function(){ cb.textContent = "복사됨 ✓"; setTimeout(function(){ cb.textContent="복사"; }, 1500); })
+        .catch(function(){ cb.textContent = "301-0207-2141-41"; });
+    });
+  </script>
   <script src="assets/site.js"></script>
 </body>
 </html>

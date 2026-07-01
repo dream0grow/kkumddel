@@ -370,3 +370,29 @@ a.card h3 { color: var(--ink); }
   .prog-row .prog-img { height:220px; }
   .grid--4 { grid-template-columns:repeat(2,1fr); }
 }
+
+/* ---------- 활동 갤러리 ---------- */
+.gallery { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.gallery .ph { margin:0; cursor:pointer; border-radius:12px; overflow:hidden; border:1px solid var(--line); background:#fff; box-shadow:var(--shadow); position:relative; }
+.gallery .ph img { width:100%; height:190px; object-fit:cover; display:block; transition:transform .25s; }
+.gallery .ph:hover img { transform:scale(1.05); }
+.gallery .ph figcaption { position:absolute; left:0; right:0; bottom:0; padding:8px 10px; font-size:.82rem; color:#fff;
+  background:linear-gradient(transparent, rgba(0,0,0,.6)); opacity:0; transition:.2s; }
+.gallery .ph:hover figcaption { opacity:1; }
+@media (max-width:900px){ .gallery { grid-template-columns:repeat(3,1fr); } }
+@media (max-width:600px){ .gallery { grid-template-columns:repeat(2,1fr); } .gallery .ph img{ height:150px; } }
+
+.lightbox { display:none; position:fixed; inset:0; z-index:1000; background:rgba(15,20,32,.9);
+  align-items:center; justify-content:center; flex-direction:column; padding:24px; }
+.lightbox.open { display:flex; }
+.lightbox img { max-width:92vw; max-height:82vh; border-radius:8px; box-shadow:0 10px 40px rgba(0,0,0,.5); }
+.lightbox .lb-cap { color:#e7eaf0; margin-top:14px; font-size:.95rem; }
+.lightbox .lb-x { position:absolute; top:16px; right:20px; background:none; border:0; color:#fff; font-size:34px; cursor:pointer; line-height:1; }
+
+/* ---------- 후원 QR ---------- */
+.donate-grid { display:grid; grid-template-columns:1.3fr .7fr; gap:20px; align-items:stretch; margin:18px 0; }
+.qr-card { text-align:center; }
+.qr-card img { width:190px; height:190px; margin:6px auto 10px; border:1px solid var(--line); border-radius:12px; background:#fff; padding:8px; }
+.acct-big { font-size:1.35rem; font-weight:800; color:var(--ink); letter-spacing:.3px; }
+.copy-btn { margin-left:8px; font-size:.8rem; padding:4px 10px; border:1px solid var(--line); border-radius:8px; background:#fff; cursor:pointer; }
+@media (max-width:680px){ .donate-grid { grid-template-columns:1fr; } }

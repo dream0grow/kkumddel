@@ -24,7 +24,10 @@
       { href: "programs.html#gamsu", label: "감수성 훈련" },
       { href: "programs.html#pungmul", label: "하날오름어린이풍물단" }
     ]},
-    { href: "news.html", label: "소식" },
+    { label: "소식", children: [
+      { href: "news.html", label: "소식·보도자료" },
+      { href: "gallery.html", label: "활동 갤러리" }
+    ]},
     { href: "board.html", label: "프로젝트 게시판" },
     { label: "참여하기", children: [
       { href: "sponsor.html", label: "후원안내" },
