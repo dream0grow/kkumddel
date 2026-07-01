@@ -62,7 +62,7 @@
     '<header class="site-header"><div class="container nav">' +
       '<a class="brand" href="index.html">' +
         '<img class="logo-img" src="assets/img/brand/logo-symbol.png" alt="교육성장네트워크 꿈들 로고" />' +
-        '<span>교육성장네트워크 꿈들<small>아이의 꿈이 자라는 교육 공동체</small></span>' +
+        '<span class="brand-name">교육성장네트워크 꿈들<small>아이와 교사가 함께 자라는 곳 · 2006년부터</small></span>' +
       "</a>" +
       '<button class="nav-toggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>' +
       '<ul class="nav-links">' + navLinks() +
@@ -75,29 +75,31 @@
       '<div class="foot-grid">' +
         "<div>" +
           "<h4>교육성장네트워크 꿈들</h4>" +
-          '<p class="muted">아동·청소년 교육 성장과 지역 문화를 잇는<br>비영리 민간단체입니다.<br>하날오름어린이풍물단을 운영합니다.</p>' +
+          '<p class="muted">초등교육의 질적 향상과 교육복지 증진을 위해 일하는<br>' +
+          "등록 비영리민간단체입니다.<br>" +
+          "푸른꿈 작은 공부방 · 꿈꾸는 교실 · 감수성 훈련 ·<br>하날오름어린이풍물단을 운영합니다.</p>" +
         "</div>" +
         "<div>" +
           "<h4>바로가기</h4>" +
           '<p class="muted">' +
-            '<a href="about.html">단체소개</a><br>' +
-            '<a href="programs.html">사업안내</a><br>' +
-            '<a href="news.html">소식</a><br>' +
+            '<a href="about.html">단체소개 · 걸어온 길</a><br>' +
+            '<a href="programs.html">하는 일</a><br>' +
+            '<a href="news.html">소식 · 기부금 사용 결과</a><br>' +
             '<a href="board.html">프로젝트 게시판</a><br>' +
             '<a href="apply.html">강의·프로그램 신청</a><br>' +
-            '<a href="bylaws.html">정관·기부금 공개</a>' +
+            '<a href="bylaws.html">정관 전문 보기</a>' +
           "</p>" +
         "</div>" +
         "<div>" +
-          "<h4>문의 · 후원</h4>" +
+          "<h4>찾아오기 · 후원</h4>" +
           '<p class="muted">전화 : <a href="tel:010-2344-4373">010-2344-4373</a><br>' +
           "주소 : 제주특별자치도 제주시 동문로21길 10<br>" +
           "후원계좌 : 농협 301-0207-2141-41<br>" +
           "<span style=\"font-size:.86rem\">(예금주 : 교육성장네트워크 꿈들)</span></p>" +
         "</div>" +
       "</div>" +
-      '<div class="copy">© ' + "2026 교육성장네트워크 꿈들 (꿈들). All rights reserved." +
-      " &nbsp;·&nbsp; 본 사이트는 비영리 단체 소개용입니다.</div>" +
+      '<div class="copy">© 2026 교육성장네트워크 꿈들 &nbsp;·&nbsp; ' +
+      '이 홈페이지는 꿈들 식구들이 직접 만들고 고쳐 갑니다.</div>' +
     "</div></footer>";
 
   function inject(id, html) {
