@@ -29,7 +29,15 @@ var KKUMDLE_TEL = "010-2344-4373";
       "· 연락처: " + phone + "\n" +
       (msg ? "· 내용: " + msg + "\n" : "");
 
-    if (window.KKUMDLE_APPLY_ENDPOINT) {
+    var cfg = window.KKUMDLE_CONFIG || {};
+    // 1) Supabase(applications 테이블)에 저장
+    if (window.KKUMDLE_READY && cfg.APPLY_TO_SUPABASE && window.KKUMDLE_DB) {
+      window.KKUMDLE_DB.submitApplication({ program: program, name: name, phone: phone, message: msg })
+        .then(function () { form.reset(); setNote("✅ 신청이 접수되었습니다. 담당자가 연락드리겠습니다.", false); })
+        .catch(function () { fallback(summary); });
+    }
+    // 2) 외부 폼 엔드포인트(Formspree 등)
+    else if (window.KKUMDLE_APPLY_ENDPOINT) {
       fetch(window.KKUMDLE_APPLY_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
@@ -38,9 +46,9 @@ var KKUMDLE_TEL = "010-2344-4373";
         if (r.ok) { form.reset(); setNote("✅ 신청이 접수되었습니다. 담당자가 연락드리겠습니다.", false); }
         else throw new Error("bad");
       }).catch(function () { fallback(summary); });
-    } else {
-      fallback(summary);
     }
+    // 3) 백엔드 미연결 시: 문자/복사 폴백
+    else { fallback(summary); }
   });
 
   function fallback(summary) {

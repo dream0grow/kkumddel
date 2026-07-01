@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 — 교육성장네트워크 꿈들</title>
+  <meta name="description" content="꿈들 관리자 페이지 (회원·신청·게시글 관리)" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <div class="page-head">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">홈</a> · 관리자</div>
+      <h1>관리자 대시보드</h1>
+      <p>회원, 강의 신청, 프로젝트 게시글을 관리합니다.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <p class="note" id="guard"></p>
+      <div id="admin-body" style="display:none">
+        <div class="admin-tabs">
+          <button class="chip active" data-tab="members">회원 (<span id="cnt-m">0</span>)</button>
+          <button class="chip" data-tab="apps">강의 신청 (<span id="cnt-a">0</span>)</button>
+          <button class="chip" data-tab="posts">프로젝트 글 (<span id="cnt-p">0</span>)</button>
+        </div>
+        <div id="tab-members" class="admin-tab"></div>
+        <div id="tab-apps" class="admin-tab" style="display:none"></div>
+        <div id="tab-posts" class="admin-tab" style="display:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      var M = window.KKUMDLE_MEMBER, DB = window.KKUMDLE_DB;
+      var guard = document.getElementById("guard"), body = document.getElementById("admin-body");
+      function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+      async function init() {
+        if (!M || !M.ready) { guard.textContent = "회원 기능이 아직 연결되지 않았습니다. (assets/config.js 설정 필요)"; return; }
+        await M.refresh();
+        if (!M.isLoggedIn()) { guard.innerHTML = "로그인이 필요합니다. <a href='login.html'>로그인</a>"; return; }
+        if (!M.isAdmin()) { guard.textContent = "관리자만 접근할 수 있습니다."; return; }
+        guard.style.display = "none"; body.style.display = "";
+        renderMembers(); renderApps(); renderPosts();
+      }
+      window.addEventListener("load", function(){ setTimeout(init, 300); });
+
+      document.querySelector(".admin-tabs").addEventListener("click", function (e) {
+        var b = e.target.closest(".chip"); if (!b) return;
+        document.querySelectorAll(".admin-tabs .chip").forEach(function(c){c.classList.remove("active");});
+        b.classList.add("active");
+        ["members","apps","posts"].forEach(function(t){ document.getElementById("tab-"+t).style.display = (t===b.dataset.tab?"":"none"); });
+      });
+
+      async function renderMembers() {
+        var rows = await DB.listMembers();
+        document.getElementById("cnt-m").textContent = rows.length;
+        document.getElementById("tab-members").innerHTML =
+          '<table class="admin-table"><thead><tr><th>이름</th><th>이메일</th><th>연락처</th><th>권한</th><th>가입일</th></tr></thead><tbody>' +
+          rows.map(function(r){ return "<tr><td>"+esc(r.name)+"</td><td>"+esc(r.email)+"</td><td>"+esc(r.phone)+"</td>"+
+            '<td><select data-uid="'+r.id+'" class="role-sel"><option value="member"'+(r.role!=="admin"?" selected":"")+'>회원</option><option value="admin"'+(r.role==="admin"?" selected":"")+'>관리자</option></select></td>'+
+            "<td>"+esc((r.created_at||"").slice(0,10))+"</td></tr>"; }).join("") + "</tbody></table>";
+        document.querySelectorAll(".role-sel").forEach(function(s){ s.addEventListener("change", async function(){ try{ await DB.setMemberRole(s.dataset.uid, s.value); }catch(e){ alert("변경 실패"); } }); });
+      }
+      async function renderApps() {
+        var rows = await DB.listApplications();
+        document.getElementById("cnt-a").textContent = rows.length;
+        document.getElementById("tab-apps").innerHTML = rows.length ?
+          '<table class="admin-table"><thead><tr><th>프로그램</th><th>이름</th><th>연락처</th><th>내용</th><th>신청일</th></tr></thead><tbody>' +
+          rows.map(function(r){ return "<tr><td>"+esc(r.program)+"</td><td>"+esc(r.name)+"</td><td>"+esc(r.phone)+"</td><td>"+esc(r.message)+"</td><td>"+esc((r.created_at||"").slice(0,10))+"</td></tr>"; }).join("") + "</tbody></table>"
+          : '<p class="note">신청 내역이 없습니다.</p>';
+      }
+      async function renderPosts() {
+        var rows = await DB.listProjectPosts();
+        document.getElementById("cnt-p").textContent = rows.length;
+        document.getElementById("tab-posts").innerHTML = rows.length ?
+          rows.map(function(r){ return '<div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;gap:10px"><strong>'+esc(r.title)+"</strong><button class='btn btn--ghost' data-del='"+r.id+"'>삭제</button></div><p style='margin-top:8px;color:var(--ink-soft);font-size:.9rem'>"+esc(r.author_name)+" · "+esc((r.created_at||"").slice(0,10))+"</p><div style='margin-top:8px;white-space:pre-wrap'>"+esc(r.body)+"</div></div>"; }).join("")
+          : '<p class="note">등록된 글이 없습니다.</p>';
+        document.getElementById("tab-posts").querySelectorAll("button[data-del]").forEach(function(b){ b.addEventListener("click", async function(){ if(confirm("삭제할까요?")){ try{ await DB.deleteProjectPost(b.dataset.del); renderPosts(); }catch(e){ alert("삭제 실패"); } } }); });
+      }
+    })();
+  </script>
+  <script src="assets/site.js"></script>
+</body>
+</html>
