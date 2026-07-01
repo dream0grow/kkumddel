@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>강의·프로그램 신청 — 교육성장네트워크 꿈들</title>
+  <meta name="description" content="하날오름어린이풍물단, 감수성 훈련, 꿈꾸는 교실 등 꿈들의 프로그램을 신청하세요." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="교육성장네트워크 꿈들" />
+  <meta property="og:title" content="강의·프로그램 신청 — 교육성장네트워크 꿈들" />
+  <meta property="og:description" content="꿈들의 프로그램 참여를 신청하세요." />
+  <meta property="og:image" content="https://dream0grow.github.io/kkumddel/assets/img/brand/logo-full.png" />
+  <meta property="og:url" content="https://dream0grow.github.io/kkumddel/apply.html" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <div class="page-head">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">홈</a> · 참여하기 · 강의·프로그램 신청</div>
+      <h1>강의·프로그램 신청</h1>
+      <p>감수성 훈련, 꿈꾸는 교실, 하날오름어린이풍물단 등 참여를 신청하실 수 있습니다.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container" style="max-width:660px">
+      <form class="apply-form card" id="apply-form">
+        <div class="fld">
+          <label for="af-program">신청 프로그램 <span class="req">*</span></label>
+          <select id="af-program" required>
+            <option value="">선택해 주세요</option>
+            <option>하날오름어린이풍물단</option>
+            <option>감수성 훈련</option>
+            <option>꿈꾸는 교실</option>
+            <option>푸른꿈 작은 공부방</option>
+            <option>기타(문의)</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="af-name">이름 <span class="req">*</span></label>
+          <input id="af-name" type="text" required placeholder="신청자 이름" />
+        </div>
+        <div class="fld">
+          <label for="af-phone">연락처 <span class="req">*</span></label>
+          <input id="af-phone" type="tel" required placeholder="010-0000-0000" />
+        </div>
+        <div class="fld">
+          <label for="af-msg">신청 내용 · 문의</label>
+          <textarea id="af-msg" rows="4" placeholder="학교·학년, 참여 인원, 문의 사항 등을 적어주세요."></textarea>
+        </div>
+        <button class="btn btn--primary btn--lg" type="submit">신청서 보내기</button>
+        <p class="note" id="apply-note" style="margin-top:12px">
+          제출 시 신청 내용이 담당자에게 전달됩니다. 문의: <a href="tel:010-2344-4373">010-2344-4373</a>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/apply.js"></script>
+  <script src="assets/site.js"></script>
+</body>
+</html>
