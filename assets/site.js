@@ -91,6 +91,7 @@
         "<div>" +
           "<h4>문의 · 후원</h4>" +
           '<p class="muted">전화 : <a href="tel:010-2344-4373">010-2344-4373</a><br>' +
+          '이메일 : <a href="mailto:pukum20171028@gmail.com">pukum20171028@gmail.com</a><br>' +
           "주소 : 제주특별자치도 제주시 동문로21길 10<br>" +
           "후원계좌 : 농협 301-0207-2141-41<br>" +
           "<span style=\"font-size:.86rem\">(예금주 : 교육성장네트워크 꿈들)</span></p>" +

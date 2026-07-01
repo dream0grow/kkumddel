@@ -37,11 +37,12 @@ create table if not exists public.profiles (
   created_at timestamptz not null default now()
 );
 
--- 프로젝트 게시판(회원 글)
+-- 게시판(회원 글) — 프로젝트·소식·공지사항·보도자료
 create table if not exists public.project_posts (
   id uuid primary key default gen_random_uuid(),
   author_id uuid references auth.users(id) on delete set null,
   author_name text,
+  category text not null default '프로젝트',  -- '프로젝트' | '소식' | '공지사항' | '보도자료'
   title text not null,
   body text not null,
   created_at timestamptz not null default now()
@@ -114,6 +115,14 @@ create policy "본인/관리자 게시글 삭제" on public.project_posts for de
 -- applications 정책: 누구나(비회원 포함) 신청 등록, 로그인 회원만 조회(비로그인 차단)
 create policy "누구나 신청 등록" on public.applications for insert with check (true);
 create policy "회원 신청 조회" on public.applications for select using (auth.uid() is not null);
+```
+
+### 🔁 이미 설치하셨다면 — 게시글 분류(카테고리) 추가 패치
+회원이 프로젝트뿐 아니라 **소식·공지사항·보도자료**도 쓸 수 있게 하려면
+아래를 **SQL Editor에서 1회 실행**하세요. (기존 글은 자동으로 '프로젝트'로 분류됩니다.)
+```sql
+alter table public.project_posts
+  add column if not exists category text not null default '프로젝트';
 ```
 
 ### 🔁 이미 설치하셨다면 — 신청 열람을 '회원'까지 허용하는 패치

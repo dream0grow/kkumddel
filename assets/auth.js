@@ -64,18 +64,23 @@
   }
 
   // ---------- 게시판 ----------
-  async function listProjectPosts() {
+  async function listProjectPosts(category) {
     if (!client) return [];
-    var r = await client.from("project_posts").select("*").order("created_at", { ascending: false });
+    var q = client.from("project_posts").select("*");
+    if (category) {
+      if (Array.isArray(category)) q = q.in("category", category);
+      else q = q.eq("category", category);
+    }
+    var r = await q.order("created_at", { ascending: false });
     return r.data || [];
   }
-  async function createProjectPost(title, body) {
+  async function createProjectPost(title, body, category) {
     if (!client) throw new Error("not-ready");
     if (!state.user) throw new Error("login-required");
     var r = await client.from("project_posts").insert({
       author_id: state.user.id,
       author_name: (state.profile && state.profile.name) || state.user.email,
-      title: title, body: body
+      title: title, body: body, category: category || "프로젝트"
     });
     if (r.error) throw r.error;
     return r.data;

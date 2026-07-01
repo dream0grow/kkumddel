@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>소식·보도자료 — 교육성장네트워크 꿈들</title>
   <meta name="description" content="교육성장네트워크 꿈들의 소식, 보도자료, 공지사항을 확인하세요." />
-  <link rel="icon" type="image/png" href="favicon.png?v=20260701b" />
+  <link rel="icon" type="image/png" href="favicon.png?v=20260701c" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="교육성장네트워크 꿈들" />
   <meta property="og:title" content="소식·보도자료 — 교육성장네트워크 꿈들" />
@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://dream0grow.github.io/kkumddel/assets/img/brand/logo-full.png" />
   <meta property="og:url" content="https://dream0grow.github.io/kkumddel/news.html" />
   <meta name="twitter:card" content="summary" />
-  <link rel="stylesheet" href="assets/style.css?v=20260701b" />
+  <link rel="stylesheet" href="assets/style.css?v=20260701c" />
 </head>
 <body>
   <div id="site-header"></div>
@@ -28,27 +28,78 @@
 
   <section class="section">
     <div class="container">
-      <div class="filterbar" id="filterbar">
-        <button class="chip active" data-cat="전체">전체</button>
-        <button class="chip" data-cat="소식">소식</button>
-        <button class="chip" data-cat="보도자료">보도자료</button>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div class="filterbar" id="filterbar" style="margin:0">
+          <button class="chip active" data-cat="전체">전체</button>
+          <button class="chip" data-cat="소식">소식</button>
+          <button class="chip" data-cat="공지사항">공지사항</button>
+          <button class="chip" data-cat="보도자료">보도자료</button>
+        </div>
+        <button class="btn btn--primary" id="write-btn" type="button">✏️ 글쓰기</button>
       </div>
+
+      <!-- 회원이 올린 소식 -->
+      <ul class="posts" id="member-posts" style="margin-top:18px"></ul>
+      <p class="note" id="member-note" style="margin:0 0 8px"></p>
+
+      <!-- 이관된 소식·보도자료 -->
       <ul class="posts" id="all-posts"></ul>
 
       <p class="note" style="margin-top:24px">💡 목록의 글을 누르면 <strong>본문</strong>이 열립니다.
-        프로젝트(단원 모집·강의 등) 글은 <a href="projects.html">사업·프로젝트</a> 페이지에서 확인하세요.</p>
+        프로젝트(단원 모집·강의 등) 글은 <a href="board.html">프로젝트 게시판</a>에서 확인하세요.</p>
     </div>
   </section>
 
   <div id="site-footer"></div>
 
-  <script src="assets/posts.js?v=20260701b"></script>
+  <script src="assets/config.js?v=20260701c"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/auth.js?v=20260701c"></script>
+  <script src="assets/posts.js?v=20260701c"></script>
   <script>
-    function show(cat) {
+    var NEWS_CATS = ["소식", "공지사항", "보도자료"];
+    var currentCat = "전체";
+
+    // 이관된(정적) 소식 렌더
+    function showStatic(cat) {
       if (cat === "전체") renderPosts("all-posts", { exclude: "프로젝트" });
       else renderPosts("all-posts", { category: cat });
     }
+
+    function esc(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+    // 회원이 올린 소식 렌더 (분류 필터 반영)
+    async function loadMemberNews() {
+      var note = document.getElementById("member-note");
+      var el = document.getElementById("member-posts");
+      var M = window.KKUMDLE_MEMBER, DB = window.KKUMDLE_DB;
+      if (!M || !M.ready) { el.innerHTML = ""; note.textContent = ""; return; }
+      var wanted = (currentCat === "전체") ? NEWS_CATS : [currentCat];
+      var posts = [];
+      try { posts = await DB.listProjectPosts(wanted); } catch (e) {}
+      if (!posts.length) { el.innerHTML = ""; note.textContent = ""; return; }
+      note.textContent = "";
+      el.innerHTML = posts.map(function (p) {
+        var d = (p.created_at || "").slice(0,10).replace(/-/g,".");
+        var cat = p.category || "소식";
+        return '<li><a class="post" href="#" data-mid="'+p.id+'">' +
+          '<span class="tag t-'+esc(cat)+'">'+esc(cat)+'</span>' +
+          '<span class="title">'+esc(p.title)+'</span>' +
+          '<span class="date">'+esc(p.author_name)+' · '+d+'</span></a>' +
+          '<div class="member-body" id="mb-'+p.id+'" style="display:none;padding:0 6px 18px;white-space:pre-wrap;color:#33384a">'+
+          esc(p.body)+(M.isAdmin()?'<div style="margin-top:12px"><button class="btn btn--ghost" data-del="'+p.id+'">삭제</button></div>':'')+'</div></li>';
+      }).join("");
+    }
+    document.getElementById("member-posts").addEventListener("click", async function (e) {
+      var a = e.target.closest("a.post[data-mid]");
+      if (a) { e.preventDefault(); var b = document.getElementById("mb-"+a.getAttribute("data-mid")); if (b) b.style.display = b.style.display==="none"?"block":"none"; return; }
+      var del = e.target.closest("button[data-del]");
+      if (del && confirm("이 글을 삭제할까요?")) { try { await window.KKUMDLE_DB.deleteProjectPost(del.getAttribute("data-del")); loadMemberNews(); } catch(err){ alert("삭제 권한이 없습니다."); } }
+    });
+
+    function show(cat) { currentCat = cat; showStatic(cat); loadMemberNews(); }
     show("전체");
+
     document.getElementById("filterbar").addEventListener("click", function (e) {
       var btn = e.target.closest(".chip");
       if (!btn) return;
@@ -56,10 +107,16 @@
       btn.classList.add("active");
       show(btn.dataset.cat);
     });
+
+    document.getElementById("write-btn").addEventListener("click", function () {
+      var M = window.KKUMDLE_MEMBER;
+      if (!M || !M.ready) { alert("회원 기능이 아직 연결되지 않았습니다."); return; }
+      var pre = (currentCat !== "전체") ? ("?cat=" + encodeURIComponent(currentCat)) : "?cat=소식";
+      if (M.canWrite()) location.href = "write.html" + pre;
+      else { alert("글쓰기는 회원 로그인 후 이용할 수 있습니다."); location.href = "login.html"; }
+    });
+    window.addEventListener("load", function(){ setTimeout(loadMemberNews, 400); });
   </script>
-  <script src="assets/config.js?v=20260701b"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="assets/auth.js?v=20260701b"></script>
-  <script src="assets/site.js?v=20260701b"></script>
+  <script src="assets/site.js?v=20260701c"></script>
 </body>
 </html>
