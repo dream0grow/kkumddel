@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>소식·보도자료 — 교육성장네트워크 꿈들</title>
   <meta name="description" content="교육성장네트워크 꿈들의 소식, 보도자료, 공지사항을 확인하세요." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="교육성장네트워크 꿈들" />
+  <meta property="og:title" content="소식·보도자료 — 교육성장네트워크 꿈들" />
+  <meta property="og:description" content="교육성장네트워크 꿈들의 소식, 보도자료, 공지사항을 확인하세요." />
+  <meta property="og:image" content="https://dream0grow.github.io/kkumddel/assets/img/brand/logo-full.png" />
+  <meta property="og:url" content="https://dream0grow.github.io/kkumddel/news.html" />
+  <meta name="twitter:card" content="summary" />
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
@@ -24,13 +32,11 @@
         <button class="chip active" data-cat="전체">전체</button>
         <button class="chip" data-cat="소식">소식</button>
         <button class="chip" data-cat="보도자료">보도자료</button>
-        <button class="chip" data-cat="프로젝트">프로젝트</button>
-        <button class="chip" data-cat="공지사항">공지사항</button>
       </div>
       <ul class="posts" id="all-posts"></ul>
 
       <p class="note" style="margin-top:24px">💡 목록의 글을 누르면 <strong>본문</strong>이 열립니다.
-        모든 글과 본문·이미지는 기존 꿈들.com에서 이관했습니다.</p>
+        프로젝트(단원 모집·강의 등) 글은 <a href="projects.html">사업·프로젝트</a> 페이지에서 확인하세요.</p>
     </div>
   </section>
 
@@ -38,7 +44,10 @@
 
   <script src="assets/posts.js"></script>
   <script>
-    function show(cat) { renderPosts("all-posts", { category: cat }); }
+    function show(cat) {
+      if (cat === "전체") renderPosts("all-posts", { exclude: "프로젝트" });
+      else renderPosts("all-posts", { category: cat });
+    }
     show("전체");
     document.getElementById("filterbar").addEventListener("click", function (e) {
       var btn = e.target.closest(".chip");

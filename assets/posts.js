@@ -542,6 +542,10 @@ function renderPosts(targetId, opts) {
   if (opts.category && opts.category !== "전체") {
     list = list.filter(function (p) { return p.category === opts.category; });
   }
+  if (opts.exclude) {
+    var ex = [].concat(opts.exclude);
+    list = list.filter(function (p) { return ex.indexOf(p.category) === -1; });
+  }
   if (opts.limit) list = list.slice(0, opts.limit);
 
   var el = document.getElementById(targetId);
