@@ -80,9 +80,14 @@
         </div>
         <button class="btn btn--primary" id="write-btn" type="button">✏️ 글쓰기</button>
       </div>
-      <ul class="posts" id="project-posts" style="margin-top:18px"></ul>
-      <p class="note" style="margin-top:16px" id="write-hint">💡 글을 누르면 본문이 열립니다.
-        <strong>글쓰기는 회원 로그인 후</strong> 이용할 수 있습니다.</p>
+      <!-- 회원이 작성한 글 (Supabase) -->
+      <ul class="posts" id="member-posts" style="margin-top:18px"></ul>
+      <p class="note" id="member-note" style="margin-top:10px"></p>
+
+      <!-- 기존 이관 프로젝트 소식 -->
+      <h3 style="margin:34px 0 6px">이전 프로젝트 소식</h3>
+      <p class="note" style="margin:0 0 8px">기존 꿈들.com에서 이관한 프로젝트 글입니다. 누르면 본문이 열립니다.</p>
+      <ul class="posts" id="project-posts"></ul>
     </div>
   </section>
 
@@ -128,15 +133,47 @@
   <script src="assets/apply.js"></script>
   <script>
     renderPosts("project-posts", { category: "프로젝트" });
-    // 글쓰기: 회원 시스템 연동 전 안내
+
+    // 글쓰기 버튼
     document.getElementById("write-btn").addEventListener("click", function () {
-      if (window.KKUMDLE_MEMBER && window.KKUMDLE_MEMBER.canWrite && window.KKUMDLE_MEMBER.canWrite()) {
-        location.href = "write.html";
-      } else {
-        alert("글쓰기는 회원 로그인 후 이용할 수 있습니다.\n회원 기능은 준비 중입니다.");
-      }
+      var M = window.KKUMDLE_MEMBER;
+      if (!M || !M.ready) { alert("회원 기능이 아직 연결되지 않았습니다.\n(관리자: assets/config.js 에 Supabase 정보 입력)"); return; }
+      if (M.canWrite()) location.href = "write.html";
+      else { alert("글쓰기는 회원 로그인 후 이용할 수 있습니다."); location.href = "login.html"; }
     });
+
+    // 회원 게시판 렌더링
+    function esc(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+    async function loadMemberPosts() {
+      var note = document.getElementById("member-note");
+      var M = window.KKUMDLE_MEMBER, DB = window.KKUMDLE_DB;
+      if (!M || !M.ready) { note.innerHTML = "💡 회원이 직접 올리는 프로젝트 글 기능은 준비 중입니다."; return; }
+      var posts = [];
+      try { posts = await DB.listProjectPosts(); } catch (e) {}
+      var el = document.getElementById("member-posts");
+      if (!posts.length) { note.innerHTML = "아직 회원이 작성한 글이 없습니다. 첫 글을 남겨보세요!"; return; }
+      note.innerHTML = "회원이 작성한 프로젝트 글입니다.";
+      el.innerHTML = posts.map(function (p) {
+        var d = (p.created_at || "").slice(0,10).replace(/-/g,".");
+        return '<li><a class="post" href="#" data-mid="'+p.id+'">' +
+          '<span class="tag t-프로젝트">회원</span>' +
+          '<span class="title">'+esc(p.title)+'</span>' +
+          '<span class="date">'+esc(p.author_name)+' · '+d+'</span></a>' +
+          '<div class="member-body" id="mb-'+p.id+'" style="display:none;padding:0 6px 18px;white-space:pre-wrap;color:#33384a">'+
+          esc(p.body)+(M.isAdmin()?'<div style="margin-top:12px"><button class="btn btn--ghost" data-del="'+p.id+'">삭제</button></div>':'')+'</div></li>';
+      }).join("");
+      el.addEventListener("click", async function (e) {
+        var a = e.target.closest("a.post[data-mid]");
+        if (a) { e.preventDefault(); var b = document.getElementById("mb-"+a.getAttribute("data-mid")); if (b) b.style.display = b.style.display==="none"?"block":"none"; return; }
+        var del = e.target.closest("button[data-del]");
+        if (del && confirm("이 글을 삭제할까요?")) { try { await DB.deleteProjectPost(del.getAttribute("data-del")); loadMemberPosts(); } catch(err){ alert("삭제 권한이 없습니다."); } }
+      });
+    }
+    window.addEventListener("load", function(){ setTimeout(loadMemberPosts, 300); });
   </script>
+  <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/auth.js"></script>
   <script src="assets/site.js"></script>
 </body>
 </html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>프로젝트 글쓰기 — 교육성장네트워크 꿈들</title>
+  <meta name="description" content="프로젝트 게시판 글쓰기 (회원 전용)" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <div class="page-head">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">홈</a> · <a href="projects.html">사업·프로젝트</a> · 글쓰기</div>
+      <h1>프로젝트 글쓰기</h1>
+      <p>회원이 프로젝트 소식·참여 후기를 남길 수 있습니다.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container" style="max-width:720px">
+      <p class="note" id="guard" style="display:none"></p>
+      <form class="apply-form card" id="write-form" style="display:none">
+        <div class="fld"><label for="w-title">제목 <span class="req">*</span></label><input id="w-title" type="text" required placeholder="제목" /></div>
+        <div class="fld"><label for="w-body">내용 <span class="req">*</span></label><textarea id="w-body" rows="12" required placeholder="내용을 입력하세요."></textarea></div>
+        <button class="btn btn--primary btn--lg" type="submit">등록</button>
+        <a class="btn btn--ghost" href="projects.html">취소</a>
+        <p class="note" id="write-msg" style="margin-top:10px"></p>
+      </form>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      var M = window.KKUMDLE_MEMBER, DB = window.KKUMDLE_DB;
+      var guard = document.getElementById("guard"), form = document.getElementById("write-form");
+      async function init() {
+        if (!M || !M.ready) { guard.style.display = ""; guard.textContent = "회원 기능이 아직 연결되지 않았습니다."; return; }
+        await M.refresh();
+        if (!M.isLoggedIn()) { guard.style.display = ""; guard.innerHTML = "로그인이 필요합니다. <a href='login.html'>로그인 하기</a>"; return; }
+        form.style.display = "";
+      }
+      window.addEventListener("load", function(){ setTimeout(init, 300); });
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        var msg = document.getElementById("write-msg"); msg.style.color = ""; msg.textContent = "등록 중…";
+        try {
+          await DB.createProjectPost(document.getElementById("w-title").value.trim(), document.getElementById("w-body").value.trim());
+          location.href = "projects.html";
+        } catch (err) { msg.style.color = "#c0392b"; msg.textContent = "등록 실패: " + (err.message || ""); }
+      });
+    })();
+  </script>
+  <script src="assets/site.js"></script>
+</body>
+</html>
