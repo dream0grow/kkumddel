@@ -33,6 +33,24 @@
 
   /* 손으로 그은 밑줄 */
   --underline: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M4 9 Q 45 3 85 7 T 196 5' fill='none' stroke='%23bf5232' stroke-width='5' stroke-linecap='round' opacity='.4'/></svg>");
+
+  /* 구버전 변수 별칭 (예전 마크업 호환) */
+  --brand: var(--pine);
+  --brand-dark: var(--pine-deep);
+  --accent: var(--persimmon);
+  --accent-dark: var(--persimmon-deep);
+  --bg: var(--paper);
+  --bg-soft: var(--paper-deep);
+  --bg-warm: #f6ede0;
+}
+
+/* 키보드 사용자 포커스 표시 */
+:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; border-radius: 2px; }
+
+/* 움직임을 줄이고 싶은 사용자 존중 */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
 }
 
 * { box-sizing: border-box; }
@@ -574,6 +592,14 @@ a.work-item:hover .more { text-decoration: underline; text-underline-offset: 3px
 .tier .amt { font-family: var(--serif); font-weight: 700; font-size: 1.25rem; color: var(--ink); }
 .tier p { margin: 8px 0 0; font-size: .92rem; color: var(--ink-soft); }
 @media (max-width: 680px) { .tier-row { grid-template-columns: 1fr; } }
+
+/* 함께해 준 곳들 */
+.partners {
+  margin-top: 30px; padding-top: 16px;
+  border-top: 1px dashed #c9bfa8;
+  font-size: .92rem; color: var(--ink-soft); line-height: 1.9;
+}
+.partners strong { color: var(--ink); font-weight: 700; }
 
 /* 투명운영 링크 묶음 */
 .trust-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }

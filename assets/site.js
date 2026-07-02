@@ -54,7 +54,7 @@
           '<a href="' + (n.children[0].href) + '" class="sub-toggle">' + n.label + ' <i class="caret">▾</i></a>' +
           '<ul class="sub-menu">' + sub + "</ul></li>";
       }
-      return '<li><a href="' + n.href + '"' + (active ? ' class="active"' : "") + ">" + n.label + "</a></li>";
+      return '<li><a href="' + n.href + '"' + (active ? ' class="active" aria-current="page"' : "") + ">" + n.label + "</a></li>";
     }).join("");
   }
 
