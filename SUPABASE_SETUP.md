@@ -3,6 +3,16 @@
 꿈들 홈페이지의 **회원가입·로그인·회원제 프로젝트 글쓰기·강의 신청·관리자 회원관리**는
 무료 백엔드 **Supabase** 로 동작합니다. 아래 순서대로 한 번만 설정하면 됩니다.
 
+> 🔒 **보안 조치는 [`SECURITY.md`](SECURITY.md) 를 함께 보세요.**
+> 설치 후 반드시 **`supabase/security_patch.sql`** 을 SQL Editor에서 1회 실행해야
+> 신청자 연락처 보호·도배 방지·권한 변경 기록 등이 적용됩니다.
+
+## ⚠️ "가입 실패: Failed to fetch" 가 뜰 때
+서버에 연결하지 못했다는 뜻입니다. 대부분 **무료 프로젝트가 1주일 이상 사용되지 않아
+일시중지(Paused)된 경우**입니다. https://supabase.com/dashboard 접속 → 프로젝트 클릭 →
+**Restore project** 버튼을 누르면 1~2분 안에 복구되며 데이터는 사라지지 않습니다.
+(자세한 진단 순서: `SECURITY.md` 0장)
+
 ---
 
 ## 1. Supabase 프로젝트 만들기 (무료)
@@ -116,18 +126,12 @@ create policy "누구나 신청 등록" on public.applications for insert with c
 create policy "회원 신청 조회" on public.applications for select using (auth.uid() is not null);
 ```
 
-### 🔁 이미 설치하셨다면 — 신청 열람을 '회원'까지 허용하는 패치
-초기에는 관리자만 신청을 볼 수 있었습니다. 로그인 회원도 신청 현황을 볼 수 있게 하려면
-아래를 **SQL Editor에서 1회 실행**하세요. (비로그인 사용자는 여전히 볼 수 없습니다.)
-```sql
-drop policy if exists "관리자만 신청 조회" on public.applications;
-drop policy if exists "회원 신청 조회" on public.applications;
-create policy "회원 신청 조회" on public.applications
-  for select using (auth.uid() is not null);
-```
-> 참고: 이 정책은 로그인한 회원이 신청 목록(이름·프로그램·날짜·연락처)을 읽을 수 있게 합니다.
-> 홈페이지 화면에서는 **연락처(개인정보)는 관리자에게만** 보이도록 처리했지만,
-> DB 차원에서 연락처까지 회원에게 감추려면 별도의 '뷰(view)'가 필요합니다(원하시면 만들어 드려요).
+### 🔒 (구버전 안내 대체) 신청 현황 열람은 보안 패치로 처리합니다
+과거 안내에서는 "회원 신청 조회" 정책으로 로그인 회원이 신청 원본(연락처 포함)을 읽을 수 있었으나,
+개인정보 보호를 위해 **`supabase/security_patch.sql`** 로 대체되었습니다. 패치를 실행하면:
+- 원본 `applications`(연락처·메시지 포함)는 **관리자만** 조회
+- 일반 회원은 연락처가 제외되고 이름이 가려진(홍*동) **`applications_board` 뷰**만 조회
+- 홈페이지 화면(apply.html)은 자동으로 뷰를 사용하도록 이미 수정되어 있습니다.
 
 ## 🔒 이미 예전 SQL을 실행하셨다면 — 보안 패치(권한 상승 차단)
 초기 정책에는 일반 회원이 스스로 `role='admin'`으로 올릴 수 있는 허점이 있었습니다.

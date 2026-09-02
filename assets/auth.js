@@ -14,6 +14,31 @@
 
   var state = { user: null, profile: null };
 
+  // ---------- 오류 메시지 한국어 변환 ----------
+  // "Failed to fetch"(서버 연결 실패)를 포함해 자주 나오는 오류를 사람이 읽을 수 있게 바꿉니다.
+  function friendlyError(err) {
+    var m = (err && err.message) || String(err || "");
+    if (/Failed to fetch|NetworkError|Load failed|ERR_NAME_NOT_RESOLVED/i.test(m))
+      return "서버에 연결하지 못했습니다. 잠시 후 다시 시도해 주세요.\n" +
+             "(계속 실패하면 관리자에게 알려주세요 — 무료 Supabase 프로젝트가 일시중지(Paused)되었을 수 있습니다. " +
+             "supabase.com 대시보드에서 Restore 버튼을 누르면 다시 살아납니다.)";
+    if (/User already registered|already been registered/i.test(m))
+      return "이미 가입된 이메일입니다. 로그인해 주세요.";
+    if (/Invalid login credentials/i.test(m))
+      return "이메일 또는 비밀번호가 올바르지 않습니다.";
+    if (/Email not confirmed/i.test(m))
+      return "이메일 인증이 아직 완료되지 않았습니다. 메일함(스팸함 포함)의 인증 링크를 눌러주세요.";
+    if (/Password should be at least/i.test(m))
+      return "비밀번호가 너무 짧습니다. 8자 이상으로 정해주세요.";
+    if (/is invalid|invalid format/i.test(m) && /email/i.test(m))
+      return "이메일 주소 형식이 올바르지 않습니다.";
+    if (/rate limit|only request this after|too many requests/i.test(m))
+      return "요청이 너무 잦습니다. 잠시(약 1분) 후 다시 시도해 주세요.";
+    if (/signup.*disabled|Signups not allowed/i.test(m))
+      return "현재 회원가입이 일시적으로 닫혀 있습니다. 관리자에게 문의해 주세요.";
+    return m || "알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.";
+  }
+
   function isLoggedIn() { return !!state.user; }
   function isAdmin() { return !!(state.profile && state.profile.role === "admin"); }
   function canWrite() { return isLoggedIn(); }
@@ -33,6 +58,10 @@
   // ---------- 인증 ----------
   async function signUp(email, password, name, phone) {
     if (!client) throw new Error("not-ready");
+    // 클라이언트 1차 검증(서버 정책과 별개로 즉시 안내)
+    if (!password || password.length < 8) throw new Error("Password should be at least 8 characters");
+    if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password))
+      throw new Error("비밀번호는 영문과 숫자를 함께 사용해 주세요. (8자 이상)");
     // 이름/연락처를 auth 메타데이터로 전달 → DB 트리거(handle_new_user)가 프로필 자동 생성
     var r = await client.auth.signUp({
       email: email, password: password,
@@ -101,8 +130,17 @@
   }
   async function listApplications() {
     if (!client) return [];
-    var r = await client.from("applications").select("*").order("created_at", { ascending: false });
-    return r.data || [];
+    // 관리자: 원본 테이블(연락처 포함) / 일반 회원: 개인정보가 가려진 뷰(applications_board)
+    // (supabase/security_patch.sql 적용 후 일반 회원은 원본 테이블을 읽을 수 없습니다)
+    if (isAdmin()) {
+      var r = await client.from("applications").select("*").order("created_at", { ascending: false });
+      return r.data || [];
+    }
+    var v = await client.from("applications_board").select("*").order("created_at", { ascending: false });
+    if (!v.error) return v.data || [];
+    // 보안 패치(SQL) 적용 전 호환: 뷰가 없으면 기존 테이블에서 최소 컬럼만 읽기
+    var legacy = await client.from("applications").select("id,program,name,created_at").order("created_at", { ascending: false });
+    return legacy.data || [];
   }
   async function setMemberRole(id, role) {
     if (!client) throw new Error("not-ready");
@@ -134,7 +172,8 @@
   window.KKUMDLE_MEMBER = {
     ready: ready, get user() { return state.user; }, get profile() { return state.profile; },
     isLoggedIn: isLoggedIn, isAdmin: isAdmin, canWrite: canWrite,
-    signUp: signUp, signIn: signIn, signOut: signOut, refresh: refresh
+    signUp: signUp, signIn: signIn, signOut: signOut, refresh: refresh,
+    friendlyError: friendlyError
   };
   window.KKUMDLE_DB = {
     listProjectPosts: listProjectPosts, createProjectPost: createProjectPost, deleteProjectPost: deleteProjectPost,

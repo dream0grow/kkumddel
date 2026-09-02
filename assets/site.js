@@ -87,7 +87,8 @@
             '<a href="news.html">소식 · 기부금 사용 결과</a><br>' +
             '<a href="board.html">프로젝트 게시판</a><br>' +
             '<a href="apply.html">강의·프로그램 신청</a><br>' +
-            '<a href="bylaws.html">정관 전문 보기</a>' +
+            '<a href="bylaws.html">정관 전문 보기</a><br>' +
+            '<a href="privacy.html">개인정보처리방침</a>' +
           "</p>" +
         "</div>" +
         "<div>" +
