@@ -44,9 +44,13 @@
 1. 이 브랜치를 `main`에 머지합니다.
 2. GitHub 저장소 → **Settings → Pages**
 3. **Source: Deploy from a branch** → Branch: `main` / 폴더 `/(root)` → Save
-4. 잠시 후 `https://<사용자명>.github.io/kkumddel/` 에서 공개됩니다.
-5. (선택) **꿈들.com 도메인 연결** — Settings → Pages → Custom domain 에 도메인을
-   입력하고, 도메인 등록처에서 DNS(CNAME/A 레코드)를 GitHub Pages로 설정합니다.
+4. 잠시 후 `https://dream-s.kr` 에서 공개됩니다.
+5. **커스텀 도메인 연결(dream-s.kr)** — 저장소 루트의 `CNAME` 파일에 도메인이
+   지정되어 있습니다. Settings → Pages → Custom domain 에 `dream-s.kr`을 입력하고,
+   도메인 등록처에서 아래 DNS 레코드를 설정합니다.
+   - A 레코드(@): `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - (선택) CNAME 레코드(www): `dream0grow.github.io`
+   - DNS 반영 후 **Enforce HTTPS** 체크
 
 ## ⚠️ 기존 사이트 대비 변경점
 
