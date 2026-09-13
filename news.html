@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>소식·보도자료 — 교육성장네트워크 꿈들</title>
   <meta name="description" content="교육성장네트워크 꿈들의 소식, 보도자료, 공지사항을 확인하세요." />
-  <link rel="icon" type="image/png" href="favicon.png?v=20260702e" />
+  <link rel="icon" type="image/png" href="favicon.png?v=20260913" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="교육성장네트워크 꿈들" />
   <meta property="og:title" content="소식·보도자료 — 교육성장네트워크 꿈들" />
@@ -13,36 +13,41 @@
   <meta property="og:image" content="https://dream-s.kr/assets/img/brand/logo-full.png" />
   <meta property="og:url" content="https://dream-s.kr/news.html" />
   <meta name="twitter:card" content="summary" />
-  <link rel="stylesheet" href="assets/style.css?v=20260702e" />
+  <!-- 문구(카피) 파일: 여기서 문구를 바꿉니다 -->
+  <script src="assets/copy.js?v=20260913"></script>
+  <script src="assets/copy-engine.js?v=20260913"></script>
+  <link rel="stylesheet" href="assets/style.css?v=20260913" />
 </head>
 <body>
   <div id="site-header"></div>
 
+  <!-- ★ 문구는 assets/copy.js (news) 에서 바꿉니다. 글 목록·본문은 assets/posts.js 입니다. -->
+
   <div class="page-head">
     <div class="container">
-      <div class="breadcrumb"><a href="index.html">홈</a> · 소식·보도자료</div>
-      <h1>차곡차곡 쌓인 기록들</h1>
-      <p>기부금 사용 결과부터 총회 보고, 신문에 난 이야기까지 — 스무 해의 기록이 그대로 있습니다.</p>
+      <div class="breadcrumb" data-copy="news.head.breadcrumb"><a href="index.html">홈</a> · 소식·보도자료</div>
+      <h1 data-copy="news.head.title">차곡차곡 쌓인 기록들</h1>
+      <p data-copy="news.head.lead">기부금 사용 결과부터 총회 보고, 신문에 난 이야기까지 — 스무 해의 기록이 그대로 있습니다.</p>
     </div>
   </div>
 
   <section class="section">
     <div class="container">
       <div class="filterbar" id="filterbar">
-        <button class="chip active" data-cat="전체">전체</button>
-        <button class="chip" data-cat="소식">소식</button>
-        <button class="chip" data-cat="보도자료">보도자료</button>
+        <button class="chip active" data-cat="전체" data-copy="news.filter.all">전체</button>
+        <button class="chip" data-cat="소식" data-copy="news.filter.news">소식</button>
+        <button class="chip" data-cat="보도자료" data-copy="news.filter.press">보도자료</button>
       </div>
       <ul class="posts" id="all-posts"></ul>
 
-      <p class="note" style="margin-top:24px">목록의 글을 누르면 본문이 열립니다.
+      <p class="note" style="margin-top:24px" data-copy="news.note">목록의 글을 누르면 본문이 열립니다.
         단원 모집·강의 같은 프로젝트 글은 <a href="projects.html">사업·프로젝트</a> 페이지에 있습니다.</p>
     </div>
   </section>
 
   <div id="site-footer"></div>
 
-  <script src="assets/posts.js?v=20260702e"></script>
+  <script src="assets/posts.js?v=20260913"></script>
   <script>
     function show(cat) {
       if (cat === "전체") renderPosts("all-posts", { exclude: "프로젝트" });
@@ -57,9 +62,9 @@
       show(btn.dataset.cat);
     });
   </script>
-  <script src="assets/config.js?v=20260702e"></script>
+  <script src="assets/config.js?v=20260913"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="assets/auth.js?v=20260702e"></script>
-  <script src="assets/site.js?v=20260702e"></script>
+  <script src="assets/auth.js?v=20260913"></script>
+  <script src="assets/site.js?v=20260913"></script>
 </body>
 </html>

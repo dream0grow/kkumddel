@@ -5,21 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>페이지를 찾을 수 없습니다 — 교육성장네트워크 꿈들</title>
   <link rel="icon" type="image/png" href="/favicon.png" />
+  <!-- 문구(카피) 파일: 여기서 문구를 바꿉니다 -->
+  <script src="/assets/copy.js"></script>
+  <script src="/assets/copy-engine.js"></script>
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
-<body>
+<body data-page="notfound">
   <div id="site-header"></div>
+
+  <!-- ★ 문구는 assets/copy.js (notfound) 에서 바꿉니다. -->
+
   <section class="section" style="text-align:center;padding:90px 0">
     <div class="container">
-      <div style="font-family:var(--serif);font-size:3.2rem;font-weight:700;color:var(--persimmon)">404</div>
-      <h1 style="margin:10px 0 8px">이 골목에는 아무것도 없네요</h1>
-      <p class="lead" style="margin-bottom:28px">주소가 바뀌었거나 지금은 없는 페이지입니다.<br>
+      <div style="font-family:var(--serif);font-size:3.2rem;font-weight:700;color:var(--persimmon)" data-copy="notfound.code">404</div>
+      <h1 style="margin:10px 0 8px" data-copy="notfound.title">이 골목에는 아무것도 없네요</h1>
+      <p class="lead" style="margin-bottom:28px" data-copy="notfound.lead">주소가 바뀌었거나 지금은 없는 페이지입니다.<br>
         길이 헷갈릴 때는 처음부터 다시 걸으면 됩니다.</p>
-      <a class="btn btn--primary btn--lg" href="/index.html">홈으로 돌아가기</a>
-      &nbsp;<a class="btn btn--ghost btn--lg" href="/news.html">소식 보러 가기</a>
-      <p class="hand" style="margin-top:30px">— 찾으시던 게 있었다면 010-2344-4373으로 알려 주세요. 고쳐 둘게요.</p>
+      <a class="btn btn--primary btn--lg" href="/index.html" data-copy="notfound.btnHome">홈으로 돌아가기</a>
+      &nbsp;<a class="btn btn--ghost btn--lg" href="/news.html" data-copy="notfound.btnNews">소식 보러 가기</a>
+      <p class="hand" style="margin-top:30px" data-copy="notfound.hand">— 찾으시던 게 있었다면 010-2344-4373으로 알려 주세요. 고쳐 둘게요.</p>
     </div>
   </section>
+
   <div id="site-footer"></div>
   <script src="/assets/config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>

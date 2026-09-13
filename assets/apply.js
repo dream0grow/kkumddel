@@ -9,7 +9,9 @@
         클립보드에 복사해 전화/카카오톡으로 전달하도록 안내합니다.
    ========================================================= */
 window.KKUMDLE_APPLY_ENDPOINT = window.KKUMDLE_APPLY_ENDPOINT || ""; // 예: "https://formspree.io/f/xxxx"
-var KKUMDLE_TEL = "010-2344-4373";
+/* 문구는 assets/copy.js (messages.apply, common.info) 에서 바꿉니다 */
+function KT(key, fallback) { return window.KKUMDLE_T ? window.KKUMDLE_T(key, fallback) : fallback; }
+var KKUMDLE_TEL = KT("common.info.tel", "010-2344-4373");
 
 (function () {
   var form = document.getElementById("apply-form");
@@ -20,10 +22,10 @@ var KKUMDLE_TEL = "010-2344-4373";
     e.preventDefault();
     var program = val("af-program"), name = val("af-name"),
         phone = val("af-phone"), msg = val("af-msg");
-    if (!program || !name || !phone) { setNote("필수 항목(프로그램·이름·연락처)을 입력해 주세요.", true); return; }
+    if (!program || !name || !phone) { setNote(KT("messages.apply.required", "필수 항목(프로그램·이름·연락처)을 입력해 주세요."), true); return; }
 
     var summary =
-      "[꿈들 강의·프로그램 신청]\n" +
+      KT("messages.apply.summaryTitle", "[꿈들 강의·프로그램 신청]") + "\n" +
       "· 프로그램: " + program + "\n" +
       "· 이름: " + name + "\n" +
       "· 연락처: " + phone + "\n" +
@@ -33,7 +35,7 @@ var KKUMDLE_TEL = "010-2344-4373";
     // 1) Supabase(applications 테이블)에 저장
     if (window.KKUMDLE_READY && cfg.APPLY_TO_SUPABASE && window.KKUMDLE_DB) {
       window.KKUMDLE_DB.submitApplication({ program: program, name: name, phone: phone, message: msg })
-        .then(function () { form.reset(); setNote("✅ 신청이 접수되었습니다. 담당자가 연락드리겠습니다.", false); })
+        .then(function () { form.reset(); setNote(KT("messages.apply.success", "✅ 신청이 접수되었습니다. 담당자가 연락드리겠습니다."), false); })
         .catch(function () { fallback(summary); });
     }
     // 2) 외부 폼 엔드포인트(Formspree 등)
@@ -43,7 +45,7 @@ var KKUMDLE_TEL = "010-2344-4373";
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({ program: program, name: name, phone: phone, message: msg })
       }).then(function (r) {
-        if (r.ok) { form.reset(); setNote("✅ 신청이 접수되었습니다. 담당자가 연락드리겠습니다.", false); }
+        if (r.ok) { form.reset(); setNote(KT("messages.apply.success", "✅ 신청이 접수되었습니다. 담당자가 연락드리겠습니다."), false); }
         else throw new Error("bad");
       }).catch(function () { fallback(summary); });
     }
@@ -59,10 +61,10 @@ var KKUMDLE_TEL = "010-2344-4373";
       var digits = KKUMDLE_TEL.replace(/[^0-9]/g, "");
       location.href = "sms:" + digits + (/(iPhone|iPad|iPod)/i.test(navigator.userAgent) ? "&" : "?") +
         "body=" + encodeURIComponent(summary);
-      setNote("문자 앱으로 신청 내용을 전송해 주세요. (내용이 클립보드에도 복사되었습니다)", false);
+      setNote(KT("messages.apply.smsSent", "문자 앱으로 신청 내용을 전송해 주세요. (내용이 클립보드에도 복사되었습니다)"), false);
     } else {
-      setNote("신청 내용이 클립보드에 복사되었습니다. 전화 " + KKUMDLE_TEL +
-              " 또는 카카오톡으로 붙여넣어 보내주세요.", false);
+      setNote(KT("messages.apply.copied", "신청 내용이 클립보드에 복사되었습니다. 전화 " + KKUMDLE_TEL +
+              " 또는 카카오톡으로 붙여넣어 보내주세요."), false);
     }
   }
 

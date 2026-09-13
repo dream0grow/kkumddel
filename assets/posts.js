@@ -540,6 +540,9 @@ var POSTS = [
   }
 ];
 
+/* 문구 가져오기 (assets/copy.js · 없으면 기본값) */
+function KT(key, fallback) { return window.KKUMDLE_T ? window.KKUMDLE_T(key, fallback) : fallback; }
+
 /* ---------- 목록 렌더링 ---------- */
 function renderPosts(targetId, opts) {
   opts = opts || {};
@@ -559,7 +562,7 @@ function renderPosts(targetId, opts) {
   if (!el) return;
 
   if (!list.length) {
-    el.innerHTML = '<li style="padding:24px;color:#5b616e">등록된 글이 없습니다.</li>';
+    el.innerHTML = '<li style="padding:24px;color:#5b616e">' + KT("messages.posts.empty", "등록된 글이 없습니다.") + '</li>';
     return;
   }
 
@@ -606,7 +609,7 @@ function openPost(id) {
   modal.querySelector(".pm-cat").className = "pm-cat tag t-" + p.category;
   modal.querySelector(".pm-title").textContent = p.title;
   modal.querySelector(".pm-date").textContent = d;
-  modal.querySelector(".pm-body").innerHTML = p.body || "<p class='muted'>본문이 없습니다.</p>";
+  modal.querySelector(".pm-body").innerHTML = p.body || "<p class='muted'>" + KT("messages.posts.noBody", "본문이 없습니다.") + "</p>";
   // 외부(언론사 등) 이미지가 사라졌으면 깨진 아이콘 대신 숨김 처리
   var imgs = modal.querySelectorAll(".pm-body img");
   for (var k = 0; k < imgs.length; k++) {
@@ -631,7 +634,7 @@ function buildModal() {
   modal.innerHTML =
     '<div class="pm-backdrop" data-close="1"></div>' +
     '<div class="pm-panel" role="dialog" aria-modal="true">' +
-      '<button class="pm-x" aria-label="닫기" data-close="1">×</button>' +
+      '<button class="pm-x" aria-label="' + KT("messages.posts.close", "닫기") + '" data-close="1">×</button>' +
       '<div class="pm-head">' +
         '<span class="pm-cat tag"></span>' +
         '<h2 class="pm-title"></h2>' +

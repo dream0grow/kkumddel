@@ -5,41 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>로그인 · 회원가입 — 교육성장네트워크 꿈들</title>
   <meta name="description" content="교육성장네트워크 꿈들 회원 로그인 및 회원가입" />
-  <link rel="icon" type="image/png" href="favicon.png?v=20260702e" />
-  <link rel="stylesheet" href="assets/style.css?v=20260702e" />
+  <link rel="icon" type="image/png" href="favicon.png?v=20260913" />
+  <!-- 문구(카피) 파일: 여기서 문구를 바꿉니다 -->
+  <script src="assets/copy.js?v=20260913"></script>
+  <script src="assets/copy-engine.js?v=20260913"></script>
+  <link rel="stylesheet" href="assets/style.css?v=20260913" />
 </head>
 <body>
   <div id="site-header"></div>
 
+  <!-- ★ 문구는 assets/copy.js (login · messages.login) 에서 바꿉니다. -->
+
   <div class="page-head">
     <div class="container">
-      <div class="breadcrumb"><a href="index.html">홈</a> · 로그인</div>
-      <h1>로그인 · 회원가입</h1>
-      <p>회원가입 후 프로젝트 게시판에 글을 남길 수 있습니다.</p>
+      <div class="breadcrumb" data-copy="login.head.breadcrumb"><a href="index.html">홈</a> · 로그인</div>
+      <h1 data-copy="login.head.title">로그인 · 회원가입</h1>
+      <p data-copy="login.head.lead">회원가입 후 프로젝트 게시판에 글을 남길 수 있습니다.</p>
     </div>
   </div>
 
   <section class="section">
     <div class="container" style="max-width:760px">
-      <p class="note" id="not-ready" style="display:none">
+      <p class="note" id="not-ready" style="display:none" data-copy="login.notReady">
         ⚠️ 회원 기능이 아직 연결되지 않았습니다. 관리자님은 <code>assets/config.js</code>에
         Supabase 정보를 입력해 주세요. (안내: <code>SUPABASE_SETUP.md</code>)
       </p>
       <div class="grid grid--2" id="auth-box">
         <form class="apply-form card" id="login-form">
-          <h3 style="margin:0 0 14px">로그인</h3>
-          <div class="fld"><label for="li-email">이메일</label><input id="li-email" type="email" required placeholder="you@example.com" /></div>
-          <div class="fld"><label for="li-pw">비밀번호</label><input id="li-pw" type="password" required placeholder="비밀번호" /></div>
-          <button class="btn btn--primary btn--lg" type="submit">로그인</button>
+          <h3 style="margin:0 0 14px" data-copy="login.signin.title">로그인</h3>
+          <div class="fld"><label for="li-email" data-copy="login.signin.emailLabel">이메일</label><input id="li-email" type="email" required placeholder="you@example.com" data-copy-attr="placeholder:login.signin.emailPlaceholder" /></div>
+          <div class="fld"><label for="li-pw" data-copy="login.signin.pwLabel">비밀번호</label><input id="li-pw" type="password" required placeholder="비밀번호" data-copy-attr="placeholder:login.signin.pwPlaceholder" /></div>
+          <button class="btn btn--primary btn--lg" type="submit" data-copy="login.signin.submit">로그인</button>
           <p class="note" id="login-msg" style="margin-top:10px"></p>
         </form>
         <form class="apply-form card" id="signup-form">
-          <h3 style="margin:0 0 14px">회원가입</h3>
-          <div class="fld"><label for="su-name">이름 <span class="req">*</span></label><input id="su-name" type="text" required placeholder="이름" /></div>
-          <div class="fld"><label for="su-phone">연락처</label><input id="su-phone" type="tel" placeholder="010-0000-0000" /></div>
-          <div class="fld"><label for="su-email">이메일 <span class="req">*</span></label><input id="su-email" type="email" required placeholder="you@example.com" /></div>
-          <div class="fld"><label for="su-pw">비밀번호 <span class="req">*</span></label><input id="su-pw" type="password" required minlength="6" placeholder="6자 이상" /></div>
-          <button class="btn btn--ghost btn--lg" type="submit">회원가입</button>
+          <h3 style="margin:0 0 14px" data-copy="login.signup.title">회원가입</h3>
+          <div class="fld"><label for="su-name"><span data-copy="login.signup.nameLabel">이름</span> <span class="req">*</span></label><input id="su-name" type="text" required placeholder="이름" data-copy-attr="placeholder:login.signup.namePlaceholder" /></div>
+          <div class="fld"><label for="su-phone" data-copy="login.signup.phoneLabel">연락처</label><input id="su-phone" type="tel" placeholder="010-0000-0000" data-copy-attr="placeholder:login.signup.phonePlaceholder" /></div>
+          <div class="fld"><label for="su-email"><span data-copy="login.signup.emailLabel">이메일</span> <span class="req">*</span></label><input id="su-email" type="email" required placeholder="you@example.com" data-copy-attr="placeholder:login.signup.emailPlaceholder" /></div>
+          <div class="fld"><label for="su-pw"><span data-copy="login.signup.pwLabel">비밀번호</span> <span class="req">*</span></label><input id="su-pw" type="password" required minlength="6" placeholder="6자 이상" data-copy-attr="placeholder:login.signup.pwPlaceholder" /></div>
+          <button class="btn btn--ghost btn--lg" type="submit" data-copy="login.signup.submit">회원가입</button>
           <p class="note" id="signup-msg" style="margin-top:10px"></p>
         </form>
       </div>
@@ -47,11 +52,13 @@
   </section>
 
   <div id="site-footer"></div>
-  <script src="assets/config.js?v=20260702e"></script>
+  <script src="assets/config.js?v=20260913"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="assets/auth.js?v=20260702e"></script>
+  <script src="assets/auth.js?v=20260913"></script>
   <script>
     (function () {
+      /* 문구: assets/copy.js → messages.login */
+      function T(k, d){ return window.KKUMDLE_T ? window.KKUMDLE_T(k, d) : d; }
       if (!window.KKUMDLE_READY) {
         document.getElementById("not-ready").style.display = "";
         document.getElementById("auth-box").style.opacity = ".5";
@@ -59,15 +66,15 @@
       var M = window.KKUMDLE_MEMBER;
       document.getElementById("login-form").addEventListener("submit", async function (e) {
         e.preventDefault();
-        var msg = document.getElementById("login-msg"); msg.textContent = "로그인 중…";
+        var msg = document.getElementById("login-msg"); msg.textContent = T("messages.login.signingIn", "로그인 중…");
         try {
           await M.signIn(document.getElementById("li-email").value.trim(), document.getElementById("li-pw").value);
-          location.href = "projects.html";
-        } catch (err) { msg.style.color = "#c0392b"; msg.textContent = "로그인 실패: " + (err.message || "이메일/비밀번호를 확인하세요."); }
+          location.href = "board.html";
+        } catch (err) { msg.style.color = "#c0392b"; msg.textContent = T("messages.login.signinFail", "로그인 실패: ") + (err.message || T("messages.login.signinFailDefault", "이메일/비밀번호를 확인하세요.")); }
       });
       document.getElementById("signup-form").addEventListener("submit", async function (e) {
         e.preventDefault();
-        var msg = document.getElementById("signup-msg"); msg.style.color = ""; msg.textContent = "가입 중…";
+        var msg = document.getElementById("signup-msg"); msg.style.color = ""; msg.textContent = T("messages.login.signingUp", "가입 중…");
         try {
           await M.signUp(
             document.getElementById("su-email").value.trim(),
@@ -75,11 +82,11 @@
             document.getElementById("su-name").value.trim(),
             document.getElementById("su-phone").value.trim()
           );
-          msg.textContent = "✅ 가입 완료! 이메일 인증이 필요할 수 있습니다. 로그인해 주세요.";
-        } catch (err) { msg.style.color = "#c0392b"; msg.textContent = "가입 실패: " + (err.message || "다시 시도해 주세요."); }
+          msg.textContent = T("messages.login.signupDone", "✅ 가입 완료! 이메일 인증이 필요할 수 있습니다. 로그인해 주세요.");
+        } catch (err) { msg.style.color = "#c0392b"; msg.textContent = T("messages.login.signupFail", "가입 실패: ") + (err.message || T("messages.login.signupFailDefault", "다시 시도해 주세요.")); }
       });
     })();
   </script>
-  <script src="assets/site.js?v=20260702e"></script>
+  <script src="assets/site.js?v=20260913"></script>
 </body>
 </html>

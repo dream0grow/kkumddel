@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>교육성장네트워크 꿈들 — 2006년부터, 제주에서</title>
   <meta name="description" content="2006년 제주에서 시작한 작은 공부방이 스무 해를 지나 아이와 교사가 함께 자라는 교육 공동체가 되었습니다. 등록 비영리민간단체 교육성장네트워크 꿈들." />
-  <link rel="icon" type="image/png" href="favicon.png?v=20260702e" />
+  <link rel="icon" type="image/png" href="favicon.png?v=20260913" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="교육성장네트워크 꿈들" />
   <meta property="og:title" content="교육성장네트워크 꿈들 — 2006년부터, 제주에서" />
@@ -34,30 +34,35 @@
     "description": "2006년 시작한 푸른꿈 작은 공부방을 운영하며 아이와 교사의 성장을 함께 돕는 제주의 등록 비영리민간단체입니다."
   }
   </script>
-  <link rel="stylesheet" href="assets/style.css?v=20260702e" />
+  <!-- 문구(카피) 파일: 여기서 문구를 바꿉니다 -->
+  <script src="assets/copy.js?v=20260913"></script>
+  <script src="assets/copy-engine.js?v=20260913"></script>
+  <link rel="stylesheet" href="assets/style.css?v=20260913" />
 </head>
 <body>
   <div id="site-header"></div>
+
+  <!-- ★ 문구는 assets/copy.js 에서 바꿉니다. data-copy="키" 가 붙은 요소는 copy.js 의 문구로 교체됩니다. -->
 
   <!-- 히어로 -->
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow">제주 · 2015년 등록 비영리민간단체</span>
-        <h1>2006년에 시작한 일을,<br><span class="u-mark">지금도 하고 있습니다</span></h1>
-        <p>제주 시내 골목, 교대 학생 몇이 모여 아이들 숙제를 봐주던 작은 공부방이 있었습니다.
+        <span class="eyebrow" data-copy="index.hero.eyebrow">제주 · 2015년 등록 비영리민간단체</span>
+        <h1 data-copy="index.hero.title">2006년에 시작한 일을,<br><span class="u-mark">지금도 하고 있습니다</span></h1>
+        <p data-copy="index.hero.lead">제주 시내 골목, 교대 학생 몇이 모여 아이들 숙제를 봐주던 작은 공부방이 있었습니다.
            그 공부방이 스무 해를 지나며 아이와 교사가 함께 자라는 교육 공동체가 되었습니다.
            거창한 약속은 못 드립니다. 대신 그동안 쌓인 기록이 있습니다.</p>
         <div class="actions">
-          <a class="btn btn--primary btn--lg" href="sponsor.html">후원으로 함께하기</a>
-          <a class="btn btn--ghost btn--lg" href="about.html">걸어온 길 보기</a>
-          <span class="seal" aria-hidden="true">2006년부터<br>제주에서<br>스무 해</span>
+          <a class="btn btn--primary btn--lg" href="sponsor.html" data-copy="index.hero.btnPrimary">후원으로 함께하기</a>
+          <a class="btn btn--ghost btn--lg" href="about.html" data-copy="index.hero.btnGhost">걸어온 길 보기</a>
+          <span class="seal" aria-hidden="true" data-copy="index.hero.seal">2006년부터<br>제주에서<br>스무 해</span>
         </div>
       </div>
       <div class="hero-side">
         <figure class="snap">
-          <img src="assets/img/site/community.jpg" alt="푸른꿈 작은 공부방 시설 보수 봉사활동을 마치고 함께 찍은 사진" />
-          <figcaption>공부방 고치던 날, 다 같이 한 장 — 영주로타리클럽과 함께</figcaption>
+          <img src="assets/img/site/community.jpg" alt="푸른꿈 작은 공부방 시설 보수 봉사활동을 마치고 함께 찍은 사진" data-copy-attr="alt:index.hero.photoAlt" />
+          <figcaption data-copy="index.hero.photoCaption">공부방 고치던 날, 다 같이 한 장 — 영주로타리클럽과 함께</figcaption>
         </figure>
       </div>
     </div>
@@ -66,16 +71,16 @@
   <!-- 기록으로 말하기 -->
   <section class="section">
     <div class="container">
-      <span class="eyebrow">우리가 해 온 일</span>
-      <h2>말보다, 기록으로 보여드리겠습니다</h2>
-      <p class="lead">아래 숫자는 모두 이 홈페이지 안에서 직접 확인하실 수 있습니다. 숫자를 누르면 기록으로 이동합니다.</p>
+      <span class="eyebrow" data-copy="index.stats.eyebrow">우리가 해 온 일</span>
+      <h2 data-copy="index.stats.title">말보다, 기록으로 보여드리겠습니다</h2>
+      <p class="lead" data-copy="index.stats.lead">아래 숫자는 모두 이 홈페이지 안에서 직접 확인하실 수 있습니다. 숫자를 누르면 기록으로 이동합니다.</p>
       <div class="stats">
-        <a class="stat" href="about.html#history"><div class="num">스무 해</div><div class="label">2006년 봄부터 지금까지, 한 해도 거르지 않고</div></a>
-        <a class="stat" href="news.html"><div class="num">74건</div><div class="label">공개된 활동 기록 — 소식 32 · 프로젝트 26 · 보도자료 16</div></a>
-        <a class="stat" href="news.html"><div class="num">420명<span class="ast" style="color:var(--persimmon)">*</span></div><div class="label">스무 해 동안 공부방을 거쳐 간 아이들</div></a>
-        <a class="stat" href="news.html"><div class="num">해마다</div><div class="label">기부금 모금액과 사용 결과를 빠짐없이 공개합니다</div></a>
+        <a class="stat" href="about.html#history"><div class="num" data-copy="index.stats.years.num">스무 해</div><div class="label" data-copy="index.stats.years.label">2006년 봄부터 지금까지, 한 해도 거르지 않고</div></a>
+        <a class="stat" href="news.html"><div class="num" data-copy="index.stats.records.num">74건</div><div class="label" data-copy="index.stats.records.label">공개된 활동 기록 — 소식 32 · 프로젝트 26 · 보도자료 16</div></a>
+        <a class="stat" href="news.html"><div class="num" data-copy="index.stats.children.num">420명<span class="ast" style="color:var(--persimmon)">*</span></div><div class="label" data-copy="index.stats.children.label">스무 해 동안 공부방을 거쳐 간 아이들</div></a>
+        <a class="stat" href="news.html"><div class="num" data-copy="index.stats.yearly.num">해마다</div><div class="label" data-copy="index.stats.yearly.label">기부금 모금액과 사용 결과를 빠짐없이 공개합니다</div></a>
       </div>
-      <p class="foot-note" style="margin-top:18px"><span class="ast">*</span> 창립 20주년 기념식(2025년 11월)에서 밝힌 누적 인원입니다. 여기에 더해, 첫 10년 동안 예비교사 101명이 공부방에서 교사로 자랐습니다.</p>
+      <p class="foot-note" style="margin-top:18px" data-copy="index.stats.footnote"><span class="ast">*</span> 창립 20주년 기념식(2025년 11월)에서 밝힌 누적 인원입니다. 여기에 더해, 첫 10년 동안 예비교사 101명이 공부방에서 교사로 자랐습니다.</p>
     </div>
   </section>
 
@@ -84,39 +89,39 @@
     <div class="container">
       <div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:8px">
         <div>
-          <span class="eyebrow">하는 일</span>
-          <h2>아이 곁에, 교사 곁에, 마을 곁에</h2>
+          <span class="eyebrow" data-copy="index.work.eyebrow">하는 일</span>
+          <h2 data-copy="index.work.title">아이 곁에, 교사 곁에, 마을 곁에</h2>
         </div>
-        <a class="btn btn--ghost" href="programs.html">자세히 보기</a>
+        <a class="btn btn--ghost" href="programs.html" data-copy="index.work.more">자세히 보기</a>
       </div>
       <div class="grid grid--2" style="margin-top:28px">
         <a class="work-item" href="programs.html#gongbubang">
-          <span class="ord">하나,</span>
-          <h3>푸른꿈 작은 공부방</h3>
-          <p>2006년부터 이어 온 방과후 배움터입니다. 사교육이 어려운 아이들이 마음 놓고 머물다 가는 곳,
+          <span class="ord" data-copy="index.work.gongbubang.ord">하나,</span>
+          <h3 data-copy="index.work.gongbubang.title">푸른꿈 작은 공부방</h3>
+          <p data-copy="index.work.gongbubang.text">2006년부터 이어 온 방과후 배움터입니다. 사교육이 어려운 아이들이 마음 놓고 머물다 가는 곳,
              예비교사들이 처음 아이들을 만나는 곳. 2018년에는 지역과 후원자들이 힘을 모아 새 보금자리도 지었습니다.</p>
-          <span class="more">공부방 이야기 →</span>
+          <span class="more" data-copy="index.work.gongbubang.link">공부방 이야기 →</span>
         </a>
         <a class="work-item" href="programs.html#ggumgyosil">
-          <span class="ord">둘,</span>
-          <h3>꿈꾸는 교실</h3>
-          <p>교사가 되고 나서 처음 몇 해가 가장 외롭습니다. 현직·예비 교사와 대학생이 모여 서로의 교실 이야기를
+          <span class="ord" data-copy="index.work.ggumgyosil.ord">둘,</span>
+          <h3 data-copy="index.work.ggumgyosil.title">꿈꾸는 교실</h3>
+          <p data-copy="index.work.ggumgyosil.text">교사가 되고 나서 처음 몇 해가 가장 외롭습니다. 현직·예비 교사와 대학생이 모여 서로의 교실 이야기를
              나누고 상담과 심리교육으로 마음을 돌봅니다. 좋은 교사는 혼자 크지 않으니까요.</p>
-          <span class="more">교사 네트워크 →</span>
+          <span class="more" data-copy="index.work.ggumgyosil.link">교사 네트워크 →</span>
         </a>
         <a class="work-item" href="programs.html#gamsu">
-          <span class="ord">셋,</span>
-          <h3>감수성 훈련</h3>
-          <p>교사와 대학생이 1년 과정과 여름·겨울 집중훈련으로 서로의 마음을 먼저 들여다봅니다.
+          <span class="ord" data-copy="index.work.gamsu.ord">셋,</span>
+          <h3 data-copy="index.work.gamsu.title">감수성 훈련</h3>
+          <p data-copy="index.work.gamsu.text">교사와 대학생이 1년 과정과 여름·겨울 집중훈련으로 서로의 마음을 먼저 들여다봅니다.
              내 마음을 읽을 줄 알아야 아이 마음도 보이니까요.</p>
-          <span class="more">훈련 소개 →</span>
+          <span class="more" data-copy="index.work.gamsu.link">훈련 소개 →</span>
         </a>
         <a class="work-item" href="programs.html#pungmul">
-          <span class="ord">넷,</span>
-          <h3>하날오름어린이풍물단</h3>
-          <p>제주초등국악연구회 하날오름과 함께 아이들이 우리 가락을 배웁니다.
+          <span class="ord" data-copy="index.work.pungmul.ord">넷,</span>
+          <h3 data-copy="index.work.pungmul.title">하날오름어린이풍물단</h3>
+          <p data-copy="index.work.pungmul.text">제주초등국악연구회 하날오름과 함께 아이들이 우리 가락을 배웁니다.
              장구채를 쥔 아이가 무대에 서면 표정부터 달라집니다. 올해로 5기째입니다.</p>
-          <span class="more">단원 모집 소식 →</span>
+          <span class="more" data-copy="index.work.pungmul.link">단원 모집 소식 →</span>
         </a>
       </div>
     </div>
@@ -125,16 +130,16 @@
   <!-- 현장 사진 -->
   <section class="section">
     <div class="container">
-      <span class="eyebrow">함께한 순간들</span>
-      <h2>사진첩에서 몇 장 꺼내 왔습니다</h2>
-      <p class="lead">더 많은 사진은 <a href="gallery.html">활동 갤러리</a>에 있습니다.</p>
+      <span class="eyebrow" data-copy="index.photos.eyebrow">함께한 순간들</span>
+      <h2 data-copy="index.photos.title">사진첩에서 몇 장 꺼내 왔습니다</h2>
+      <p class="lead" data-copy="index.photos.lead">더 많은 사진은 <a href="gallery.html">활동 갤러리</a>에 있습니다.</p>
       <div class="grid grid--3 photo-band">
-        <figure><img src="assets/img/site/workshop.jpg" alt="감수성 훈련에서 전지에 약속을 적는 참가자들" loading="lazy" />
-          <figcaption>“우리는 끈끈한 관계를 원해” — 벽에 붙인 약속들</figcaption></figure>
-        <figure><img src="assets/img/site/teachers.jpg" alt="방송 '소통의 고수'에 출연한 꿈들 선생님들" loading="lazy" />
-          <figcaption>방송에 나간 우리 선생님들, 긴장했지만 잘했다</figcaption></figure>
-        <figure><img src="assets/img/site/talk.jpg" alt="교육 이야기를 나누며 웃는 선생님들" loading="lazy" />
-          <figcaption>“행복은 성적순인가요?” 웃으며 진심을 나눈 날</figcaption></figure>
+        <figure><img src="assets/img/site/workshop.jpg" alt="감수성 훈련에서 전지에 약속을 적는 참가자들" loading="lazy" data-copy-attr="alt:index.photos.p1.alt" />
+          <figcaption data-copy="index.photos.p1.caption">“우리는 끈끈한 관계를 원해” — 벽에 붙인 약속들</figcaption></figure>
+        <figure><img src="assets/img/site/teachers.jpg" alt="방송 '소통의 고수'에 출연한 꿈들 선생님들" loading="lazy" data-copy-attr="alt:index.photos.p2.alt" />
+          <figcaption data-copy="index.photos.p2.caption">방송에 나간 우리 선생님들, 긴장했지만 잘했다</figcaption></figure>
+        <figure><img src="assets/img/site/talk.jpg" alt="교육 이야기를 나누며 웃는 선생님들" loading="lazy" data-copy-attr="alt:index.photos.p3.alt" />
+          <figcaption data-copy="index.photos.p3.caption">“행복은 성적순인가요?” 웃으며 진심을 나눈 날</figcaption></figure>
       </div>
     </div>
   </section>
@@ -142,17 +147,17 @@
   <!-- 투명 운영 -->
   <section class="section section--soft">
     <div class="container">
-      <span class="eyebrow">투명한 살림</span>
-      <h2>후원금이 어디로 가는지, 숨기지 않습니다</h2>
-      <p class="lead" style="max-width:680px">해마다 기부금 모금액과 사용 내역을 정리해 올리고 정관도 전문 그대로 공개해 두었습니다.
+      <span class="eyebrow" data-copy="index.trust.eyebrow">투명한 살림</span>
+      <h2 data-copy="index.trust.title">후원금이 어디로 가는지, 숨기지 않습니다</h2>
+      <p class="lead" style="max-width:680px" data-copy="index.trust.lead">해마다 기부금 모금액과 사용 내역을 정리해 올리고 정관도 전문 그대로 공개해 두었습니다.
         저희 말만 있는 것도 아닙니다. 신문과 방송에 실린 <a href="news.html">보도 16건</a>이 그대로 남아 있습니다.
         그래도 궁금한 게 남으면 <a href="tel:010-2344-4373">전화</a> 주세요.</p>
       <div class="trust-links">
-        <a href="news.html"><span class="t">기부금 사용 결과</span><span class="d">해마다 모금액과 쓰임새를 공개합니다. 2025년 결과까지 올라와 있습니다.</span></a>
-        <a href="bylaws.html"><span class="t">정관 전문</span><span class="d">단체의 목적과 운영 규정을 요약 없이 그대로 볼 수 있습니다.</span></a>
-        <a href="news.html"><span class="t">정기총회 결과보고</span><span class="d">올해로 14번째 총회를 열었습니다. 결과보고서를 소식에서 확인하세요.</span></a>
+        <a href="news.html"><span class="t" data-copy="index.trust.link1.title">기부금 사용 결과</span><span class="d" data-copy="index.trust.link1.desc">해마다 모금액과 쓰임새를 공개합니다. 2025년 결과까지 올라와 있습니다.</span></a>
+        <a href="bylaws.html"><span class="t" data-copy="index.trust.link2.title">정관 전문</span><span class="d" data-copy="index.trust.link2.desc">단체의 목적과 운영 규정을 요약 없이 그대로 볼 수 있습니다.</span></a>
+        <a href="news.html"><span class="t" data-copy="index.trust.link3.title">정기총회 결과보고</span><span class="d" data-copy="index.trust.link3.desc">올해로 14번째 총회를 열었습니다. 결과보고서를 소식에서 확인하세요.</span></a>
       </div>
-      <p class="partners"><strong>함께해 준 곳들</strong> — 제주대학교 · 유성건설 · 네오플 · 초록우산 어린이재단 ·
+      <p class="partners" data-copy="index.trust.partners"><strong>함께해 준 곳들</strong> — 제주대학교 · 유성건설 · 네오플 · 초록우산 어린이재단 ·
         영주로타리클럽 · 제주초등국악연구회 하날오름, 그리고 공부방 기부자의 벽에 새겨진 많은 이름들.</p>
     </div>
   </section>
@@ -162,10 +167,10 @@
     <div class="container">
       <div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:8px;">
         <div>
-          <span class="eyebrow">요즘 꿈들</span>
-          <h2>최근 소식</h2>
+          <span class="eyebrow" data-copy="index.recent.eyebrow">요즘 꿈들</span>
+          <h2 data-copy="index.recent.title">최근 소식</h2>
         </div>
-        <a class="btn btn--ghost" href="news.html">소식 전체보기</a>
+        <a class="btn btn--ghost" href="news.html" data-copy="index.recent.more">소식 전체보기</a>
       </div>
       <ul class="posts" id="recent-posts" style="margin-top:22px"></ul>
     </div>
@@ -174,13 +179,13 @@
   <!-- 스무 해가 하는 일 -->
   <section class="section">
     <div class="container" style="max-width:760px">
-      <span class="eyebrow">스무 해가 하는 일</span>
+      <span class="eyebrow" data-copy="index.story.eyebrow">스무 해가 하는 일</span>
       <blockquote class="pull-quote" style="font-size:1.3rem;margin-top:8px">
-        할머니와 단둘이 살던 2학년 아이가 있었습니다.<br>
-        그 아이가 자라 부모가 되어, 선생님에게 감사 인사를 전해 왔습니다.
-        <span class="who">— 허수호 전 대표가 들려준 이야기</span>
+        <span data-copy="index.story.quote">할머니와 단둘이 살던 2학년 아이가 있었습니다.<br>
+        그 아이가 자라 부모가 되어, 선생님에게 감사 인사를 전해 왔습니다.</span>
+        <span class="who" data-copy="index.story.who">— 허수호 전 대표가 들려준 이야기</span>
       </blockquote>
-      <p style="color:#443b2d;margin:0">공부방이 하는 일은 대단하지 않습니다. 숙제를 봐주고, 간식을 챙기고,
+      <p style="color:#443b2d;margin:0" data-copy="index.story.text">공부방이 하는 일은 대단하지 않습니다. 숙제를 봐주고, 간식을 챙기고,
          아이 이야기를 끝까지 들어줍니다. 다만 그 평범한 시간이 아이 마음에 어른 한 사람으로 남습니다.
          스무 해 뒤에 돌아온 인사가 그 증거입니다.</p>
     </div>
@@ -190,25 +195,25 @@
   <section class="section section--warm">
     <div class="container">
       <div class="cta">
-        <span class="eyebrow" style="justify-content:center;display:inline-flex">후원 초대</span>
-        <h2>매달 만 원으로, 한 아이 곁의 어른이 될 수 있습니다</h2>
-        <p>꿈들의 살림은 대부분 눈에 잘 띄지 않는 일입니다. 공부방 난방비와 아이들 간식,
+        <span class="eyebrow" style="justify-content:center;display:inline-flex" data-copy="index.cta.eyebrow">후원 초대</span>
+        <h2 data-copy="index.cta.title">매달 만 원으로, 한 아이 곁의 어른이 될 수 있습니다</h2>
+        <p data-copy="index.cta.text">꿈들의 살림은 대부분 눈에 잘 띄지 않는 일입니다. 공부방 난방비와 아이들 간식,
            책과 학용품, 선생님들 공부 모임 자리 같은 것들이지요. 이 자잘한 일들이 모여
            스무 해가 되었습니다. 여기에 이름 한 줄을 보태 주세요.</p>
-        <p class="acct-line">농협 301-0207-2141-41 <span style="color:var(--ink-soft);font-size:.92rem">(예금주 교육성장네트워크 꿈들)</span></p>
-        <a class="btn btn--primary btn--lg" href="sponsor.html">후원 안내 보기</a>
-        <p class="hand" style="margin:22px 0 0">— 입금자명을 남겨 주시면 감사 인사를 드릴 수 있어요.</p>
+        <p class="acct-line" data-copy="index.cta.account">농협 301-0207-2141-41 <span style="color:var(--ink-soft);font-size:.92rem">(예금주 교육성장네트워크 꿈들)</span></p>
+        <a class="btn btn--primary btn--lg" href="sponsor.html" data-copy="index.cta.btn">후원 안내 보기</a>
+        <p class="hand" style="margin:22px 0 0" data-copy="index.cta.hand">— 입금자명을 남겨 주시면 감사 인사를 드릴 수 있어요.</p>
       </div>
     </div>
   </section>
 
   <div id="site-footer"></div>
 
-  <script src="assets/posts.js?v=20260702e"></script>
+  <script src="assets/posts.js?v=20260913"></script>
   <script>renderPosts("recent-posts", { limit: 5 });</script>
-  <script src="assets/config.js?v=20260702e"></script>
+  <script src="assets/config.js?v=20260913"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="assets/auth.js?v=20260702e"></script>
-  <script src="assets/site.js?v=20260702e"></script>
+  <script src="assets/auth.js?v=20260913"></script>
+  <script src="assets/site.js?v=20260913"></script>
 </body>
 </html>
