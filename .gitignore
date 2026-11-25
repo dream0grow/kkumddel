@@ -1,0 +1,4 @@
+# 개인정보: 언론사 명단·메일 파일은 저장소에 넣지 않는다
+**/press_contacts*.csv
+*.eml
+__pycache__/
